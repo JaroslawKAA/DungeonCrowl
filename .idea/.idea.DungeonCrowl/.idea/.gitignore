@@ -1,0 +1,13 @@
+﻿# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/contentModel.xml
+/projectSettingsUpdater.xml
+/.idea.DungeonCrowl.iml
+/modules.xml
+# Datasource local storage ignored files
+/../../../../../../../../../:\Onedrive\Code Cool\Projects\Module 3\DungeonCrowl\.idea\.idea.DungeonCrowl\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DungeonCrawl.Actors.Items;
+using UnityEngine;
 
 namespace DungeonCrawl.Actors.Characters
 {
@@ -58,5 +59,11 @@ namespace DungeonCrawl.Actors.Characters
         }
 
         public override string DefaultName => "Player";
+        
+        public static bool CheckIfOwnKey(Key key)
+        {
+            // TODO 
+            throw new System.NotImplementedException();
+        }
     }
 }

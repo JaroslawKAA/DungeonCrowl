@@ -1,4 +1,4 @@
-namespace Source.Enums
+namespace DungeonCrawl
 {
     public enum ItemType
     {

@@ -1,5 +1,4 @@
 using DungeonCrawl.Actors.Items;
-using Source.Enums;
 using UnityEngine;
 
 namespace Source.Actors.Items

@@ -1,9 +1,4 @@
-﻿using System;
-using static System.Console;
-using System.Collections.Generic;
-using Source.Actors.Items;
-using Source.Enums;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 namespace DungeonCrawl.Actors.Items
 {
@@ -13,8 +8,6 @@ namespace DungeonCrawl.Actors.Items
         public  List<Item> itemList;
         private ItemType _type;
         private Item _newItem;
-        public InventoryManager inventoryManager;
-        
 
 
         public Inventory()

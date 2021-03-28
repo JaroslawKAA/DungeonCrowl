@@ -1,10 +1,13 @@
-﻿using DungeonCrawl.Core;
+﻿using DungeonCrawl.Actors.Items;
+using DungeonCrawl.Core;
 using UnityEngine;
 
 namespace DungeonCrawl.Actors.Characters
 {
     public abstract class Character : Actor
     {
+        public Inventory Inventory { get; set; }
+        
         [SerializeField] private int _health = 100;
         public int Health
         {

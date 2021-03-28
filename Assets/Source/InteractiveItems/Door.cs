@@ -26,8 +26,8 @@ namespace Source.InteractiveItems
         private SpriteRenderer _spriteRenderer;
         private void Awake()
         {
-            _spriteRenderer.sprite = CloseSprite;
             _spriteRenderer = GetComponent<SpriteRenderer>();
+            _spriteRenderer.sprite = CloseSprite;
         }
 
         private bool _isLock = false;

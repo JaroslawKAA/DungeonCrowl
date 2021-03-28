@@ -1,7 +1,8 @@
 ﻿using DungeonCrawl.Actors;
 using DungeonCrawl.Actors.Characters;
-using DungeonCrawl.Actors.Items;
+using Source.Actors.Items;
 using UnityEngine;
+// ReSharper disable All
 
 namespace Source.InteractiveItems
 {
@@ -58,7 +59,7 @@ namespace Source.InteractiveItems
         {
             IsOpen = true;
             _spriteRenderer.sprite = OpenSprite;
-            GetComponent<Collider2D>().enabled = false;
+            GetComponent<Collider2D>().isTrigger = true;
             // TODO Play sound.
         }
 
@@ -66,7 +67,7 @@ namespace Source.InteractiveItems
         {
             IsOpen = false;
             _spriteRenderer.sprite = CloseSprite;
-            GetComponent<Collider2D>().enabled = true;
+            GetComponent<Collider2D>().isTrigger = false;
             // TODO Play sound.
         }
 
@@ -85,7 +86,7 @@ namespace Source.InteractiveItems
             }
         }
 
-        public void Activate()
+        public void Activate(GameObject owner)
         {
             if (IsLock)
                 Unlock();

@@ -5,7 +5,7 @@ namespace Source.InteractiveItems
 {
     public class Chest : MonoBehaviour,  ISelectable
     {
-        public void Activate()
+        public void Activate(GameObject owner)
         {
             throw new System.NotImplementedException();
         }

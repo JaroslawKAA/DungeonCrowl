@@ -4,18 +4,11 @@ namespace DungeonCrawl.Actors.Items
 {
     public class Inventory
     {
-        // TODO Store and manage inventory
-        public  List<Item> itemList;
-        private ItemType _type;
-        private Item _newItem;
-
+        public List<Item> Content { get; set; }
 
         public Inventory()
         {
-            itemList = new List<Item>();
-
+            Content = new List<Item>();
         }
-
-        
     }
 }

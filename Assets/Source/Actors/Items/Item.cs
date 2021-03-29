@@ -1,5 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using DungeonCrawl.Actors.Characters;
+using Source.Actors.Items;
+using Source.Core;
+
 // ReSharper disable All
 
 namespace DungeonCrawl.Actors.Items
@@ -10,6 +14,8 @@ namespace DungeonCrawl.Actors.Items
         public ItemType Type { get; set; }
         public int Value { get; set; }
 
+        public Sprite Sprite { get; private set; }
+
         public Item(string name, int value)
         {
             Name = name;
@@ -17,13 +23,18 @@ namespace DungeonCrawl.Actors.Items
             this.Type = ItemType.Other;
         }
 
+        private void Awake()
+        {
+            this.Sprite = GetComponent<SpriteRenderer>().sprite;
+        }
+
         public void PickUp(GameObject owner)
         {
             owner.GetComponent<Character>().Inventory.Content.Add(this);
             Destroy(this.gameObject);
 
-            Debug.Log(owner.GetComponent<Character>().Inventory.Content);
-            Debug.Log(owner.GetComponent<Character>().Inventory.Content.Count);
+            InventoryManager.Singleton.Display();
+            MessageBox.Singleton.DisplayMessage("I picked up item! :)");
         }
 
         public void Activate(GameObject owner)

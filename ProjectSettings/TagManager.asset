@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Interactive
+  - Item
+  - InventorySlots
+  - HelmetSlot
+  - ArmorSlot
+  - WeaponSlot
   layers:
   - Default
   - TransparentFX

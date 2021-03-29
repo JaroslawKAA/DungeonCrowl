@@ -14,7 +14,7 @@ namespace DungeonCrawl.Actors.Characters
             get => _health;
             private set => _health = value;
         }
-
+        
         public void ApplyDamage(int damage)
         {
             Health -= damage;
@@ -34,5 +34,11 @@ namespace DungeonCrawl.Actors.Characters
         ///     All characters are drawn "above" floor etc
         /// </summary>
         public override int Z => -1;
+
+        protected override void OnAwake()
+        {
+            base.OnAwake();
+            Inventory = new Inventory();
+        }
     }
 }

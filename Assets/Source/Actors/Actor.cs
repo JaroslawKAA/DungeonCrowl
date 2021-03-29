@@ -33,6 +33,8 @@ namespace DungeonCrawl.Actors
             _spriteRenderer = GetComponent<SpriteRenderer>();
             Position = new Vector3(Position.x, Position.y, Z);
             Speed = 5;
+            
+            OnAwake();
         }
 
         private void Update()
@@ -82,6 +84,10 @@ namespace DungeonCrawl.Actors
         /// </summary>
         /// <param name="deltaTime">Time (in seconds) since the last animation frame</param>
         protected virtual void OnUpdate(float deltaTime)
+        {
+        }
+        
+        protected virtual void OnAwake()
         {
         }
         

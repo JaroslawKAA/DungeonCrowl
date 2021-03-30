@@ -9,7 +9,6 @@ namespace DungeonCrawl.Actors.Items
 
         public Inventory()
         {
-            Debug.Log("Initialized Content in Inventory");
             Content = new List<Item>();
         }
     }

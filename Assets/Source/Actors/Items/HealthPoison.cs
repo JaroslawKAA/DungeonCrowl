@@ -3,14 +3,10 @@ using DungeonCrawl.Actors.Items;
 
 namespace Source.Actors.Items
 {
-    public class HealthPoison : Item
+    public class HealthPoison : Food
     {
-        private int Healing { get; set; }
-        
-        
-        public HealthPoison(string name, int value,int healing) : base(name, value)
+        public HealthPoison(string name,int healing) : base(name, healing)
         {
-            Healing = healing;
             Type = ItemType.Poison;
         }
     }

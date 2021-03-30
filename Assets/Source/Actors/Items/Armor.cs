@@ -7,7 +7,7 @@ namespace Source.Actors.Items
     {
         public int Protection { get; set; }
 
-        public Armor(string name, ItemType type, int value,int protection) : base(name, value)
+        public Armor(string name,int protection) : base(name)
         {
             Protection = protection;
             this.Type = ItemType.Armor;

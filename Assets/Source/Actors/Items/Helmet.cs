@@ -3,13 +3,11 @@ using DungeonCrawl.Actors.Items;
 
 namespace Source.Actors.Items
 {
-    public class Helmet : Item
+    public class Helmet : Armor
     {
-        public int Protection { get; set; }
 
-        public Helmet(string name, ItemType type, int value,int protection) : base(name, value)
+        public Helmet(string name,int protection) : base(name, protection)
         {
-            Protection = protection;
             this.Type = ItemType.Armor;
         }
     }

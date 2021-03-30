@@ -40,7 +40,6 @@ namespace Source.Core
         public void DisplayMessage(string message)
         {
             timer = delay;
-            Debug.Log(messageBoxInstance.transform.GetChild(0).GetComponent<TextMeshProUGUI>());
             messageBoxInstance.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = message;
             messageBoxInstance.SetActive(true);
         }

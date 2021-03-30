@@ -2,6 +2,7 @@
 using DungeonCrawl.Actors.Characters;
 using Source.Actors.Items;
 using UnityEngine;
+
 // ReSharper disable All
 
 namespace Source.InteractiveItems
@@ -12,7 +13,7 @@ namespace Source.InteractiveItems
 
         public Sprite CloseSprite
         {
-            get => _closeSprite; 
+            get => _closeSprite;
             set => _closeSprite = value;
         }
 
@@ -25,13 +26,16 @@ namespace Source.InteractiveItems
         }
 
         private SpriteRenderer _spriteRenderer;
+
         private void Awake()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _spriteRenderer.sprite = CloseSprite;
+
+            Key = GetComponent<Door>().KeyGameObject.GetComponent<Key>();
         }
 
-        private bool _isLock = false;
+        [SerializeField] private bool _isLock = false;
 
         public bool IsLock
         {
@@ -47,6 +51,8 @@ namespace Source.InteractiveItems
             set => _isOpen = value;
         }
 
+        public GameObject KeyGameObject;
+        
         private Key _key;
 
         private Key Key
@@ -75,9 +81,10 @@ namespace Source.InteractiveItems
         {
             GameObject player = GameObject.FindWithTag("Player");
             Player p = player.GetComponent<Player>();
-            if (Player.CheckIfOwnKey(this.Key))
+            if (p.CheckIfOwnKey(this.Key))
             {
-                IsLock = true;
+                IsLock = false;
+                Open();
                 // TODO Play sound
             }
             else

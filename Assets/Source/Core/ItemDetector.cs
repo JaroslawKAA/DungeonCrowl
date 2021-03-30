@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DungeonCrawl.Actors;
 using UnityEngine;
+
 // ReSharper disable All
 
 namespace Source.Core
@@ -13,7 +14,7 @@ namespace Source.Core
 
         private readonly String[] DETECTABLE_TAGS = new String[]
         {
-            "Interactive", 
+            "Interactive",
             "Item",
             "Character"
         };
@@ -79,14 +80,11 @@ namespace Source.Core
             ItemsAround = result;
         }
 
-        private void Update()
+        public void Activate()
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (SelectedItem != null)
             {
-                if (SelectedItem != null)
-                {
-                    SelectedItem.GetComponent<ISelectable>().Activate(gameObject);
-                }
+                SelectedItem.GetComponent<ISelectable>().Activate(gameObject);
             }
         }
 

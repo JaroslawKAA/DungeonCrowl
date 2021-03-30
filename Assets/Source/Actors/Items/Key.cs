@@ -1,14 +1,20 @@
 using DungeonCrawl;
 using DungeonCrawl.Actors.Items;
+using Source.InteractiveItems;
+using UnityEngine;
 
 namespace Source.Actors.Items
 {
     public class Key : Item
 
     {
-        // TODO  prop Door
-        public Key(string name, ItemType type, int value) : base(name, value)
+        public Key(string name) : base(name)
         {
+        }
+
+        protected override void OnAwake()
+        {
+            base.OnAwake();
         }
     }
 }

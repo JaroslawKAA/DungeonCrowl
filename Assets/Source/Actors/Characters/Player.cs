@@ -1,5 +1,7 @@
-﻿using DungeonCrawl.Actors.Items;
+﻿using System.Runtime.CompilerServices;
+using DungeonCrawl.Actors.Items;
 using Source.Actors.Items;
+using Source.Core;
 using UnityEngine;
 
 namespace DungeonCrawl.Actors.Characters
@@ -17,8 +19,17 @@ namespace DungeonCrawl.Actors.Characters
         protected override void OnUpdate(float deltaTime)
         {
             Move();
+            PickUp();
         }
-        
+
+        private void PickUp()
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                gameObject.GetComponent<ItemDetector>().Activate();
+            }
+        }
+
         public override void Move()
         {
             Vector2 movement = new Vector2();
@@ -62,10 +73,18 @@ namespace DungeonCrawl.Actors.Characters
 
         public override string DefaultName => "Player";
         
-        public static bool CheckIfOwnKey(Key key)
+        public bool CheckIfOwnKey(Key key)
         {
-            // TODO 
-            throw new System.NotImplementedException();
+            foreach (Item item in this.Inventory.Content)
+            {
+                if (item is Key && item == key)
+                {
+                    MessageBox.Singleton.DisplayMessage("Correct key!");
+                    return true;
+                }
+            }
+            MessageBox.Singleton.DisplayMessage("Wrong key!");
+            return false;
         }
     }
 }

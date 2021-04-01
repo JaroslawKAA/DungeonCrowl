@@ -10,6 +10,9 @@ namespace Source.Core
 {
     public class InventoryManager : MonoBehaviour
     {
+        /// <summary>
+        /// Item Prefab to spawn items representations in inventory.
+        /// </summary>
         public GameObject UIItemPrefab;
 
         public static InventoryManager Singleton { get; private set; }
@@ -20,10 +23,22 @@ namespace Source.Core
         private GameObject HelmetSlot { get; set; }
         private GameObject ArmorSlot { get; set; }
         private GameObject WeaponSlot { get; set; }
+        private GameObject LeftRoll { get; set; }
+        private GameObject RightRoll { get; set; }
+
+        /// <summary>
+        /// True if we opened inventory, ele false
+        /// </summary>
         private bool Activated { get; set; } = false;
+
         private int SlotsCount { get; set; }
 
+
+        /// <summary>
+        /// Index of selected slot in inventory.
+        /// </summary>
         private int SelectedSlot { get; set; } = 0;
+
         public float _slotSize;
         public float _selectedSlotSize = 1;
         private GameObject _player;
@@ -42,6 +57,8 @@ namespace Source.Core
             HelmetSlot = GameObject.FindWithTag("HelmetSlot");
             ArmorSlot = GameObject.FindWithTag("ArmorSlot");
             WeaponSlot = GameObject.FindWithTag("WeaponSlot");
+            LeftRoll = GameObject.Find("LeftRoll");
+            RightRoll = GameObject.Find("RightRoll");
             InventorySlots = new List<GameObject>();
 
             foreach (Transform child in GameObject.FindWithTag("InventorySlots").transform)
@@ -86,30 +103,34 @@ namespace Source.Core
                 }
                 else if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Return))
                 {
-                    
                     Inventory.Content[SelectedSlot].Use();
                     Display();
                 }
-                
             }
         }
+
         /// <summary>
-        /// Refresh inventory state
+        /// Refresh inventory view.
         /// </summary>
         public void Display()
         {
             Clear();
+            DisplayScrollHints();
 
-            for (int i = 0; i < Inventory.Content.Count && i < InventorySlots.Count; i++)
+            for (int i = 0; i < InventorySlots.Count; i++)
             {
                 // Instantiate item icon and set correct image and amount value
-                GameObject gameObject = Instantiate(UIItemPrefab, InventorySlots[i].transform);
-                gameObject.GetComponent<Image>().sprite = Inventory.Content[i].Sprite;
-                gameObject.GetComponent<RectTransform>().localPosition = new Vector3();
+                if (i < Inventory.Content.Count)
+                {
+                    GameObject gameObject = Instantiate(UIItemPrefab, InventorySlots[i].transform);
+                    gameObject.GetComponent<Image>().sprite = Inventory.Content[i + _itemsOffset].Sprite;
+                    gameObject.GetComponent<RectTransform>().localPosition = new Vector3();
+                    gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =
+                        Inventory.Content[i].Amount.ToString();
+                }
+
                 InventorySlots[i].GetComponent<RectTransform>().localScale =
                     new Vector3(_slotSize, _slotSize, _slotSize);
-                gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =
-                    Inventory.Content[i].Amount.ToString();
             }
 
             if (Activated)
@@ -117,7 +138,24 @@ namespace Source.Core
             else
                 DeselectSlot();
         }
-        
+
+        /// <summary>
+        /// Display scrolling hints if you have more items than slots.
+        /// </summary>
+        public void DisplayScrollHints()
+        {
+            if (_itemsOffset > 0)
+                LeftRoll.SetActive(true);
+            else
+                LeftRoll.SetActive(false);
+
+            if (Inventory.Content.Count > SlotsCount
+                && _itemsOffset + SelectedSlot < Inventory.Content.Count - 1)
+                RightRoll.SetActive(true);
+            else
+                RightRoll.SetActive(false);
+        }
+
         public void ActivateInventory()
         {
             Activated = true;
@@ -131,7 +169,7 @@ namespace Source.Core
             _player.GetComponent<Player>().enabled = true;
             Display();
         }
-        
+
         /// <summary>
         /// Remove all icons from every slots.
         /// </summary>
@@ -146,25 +184,29 @@ namespace Source.Core
             }
         }
 
+
+        private int _itemsOffset = 0;
+
         private void MoveSelectorLeft()
         {
-            if (Inventory.Content.Count > 0)
+            if (Inventory.Content.Count > 0 && SelectedSlot == 0 && _itemsOffset == 0)
             {
-                if (SelectedSlot == 0)
+                if (Inventory.Content.Count < SlotsCount)
                 {
-                    if (Inventory.Content.Count < SlotsCount)
-                    {
-                        SelectedSlot = Inventory.Content.Count - 1;
-                    }
-                    else
-                    {
-                        SelectedSlot = SlotsCount - 1;
-                    }
+                    SelectedSlot = Inventory.Content.Count - 1;
                 }
                 else
                 {
-                    SelectedSlot--;
+                    SelectedSlot = SlotsCount - 1;
                 }
+            }
+            else if (_itemsOffset > 0 && SelectedSlot == 0)
+            {
+                _itemsOffset--;
+            }
+            else
+            {
+                SelectedSlot--;
             }
         }
 
@@ -172,7 +214,13 @@ namespace Source.Core
         {
             if (Inventory.Content.Count > 0)
             {
-                if (SelectedSlot == SlotsCount - 1 || SelectedSlot == Inventory.Content.Count - 1)
+                if (SelectedSlot == SlotsCount - 1
+                    && Inventory.Content.Count > SlotsCount
+                    && _itemsOffset + SelectedSlot < Inventory.Content.Count - 1)
+                {
+                    _itemsOffset++;
+                }
+                else if (SelectedSlot == SlotsCount - 1 || SelectedSlot == Inventory.Content.Count - 1)
                 {
                     SelectedSlot = 0;
                 }

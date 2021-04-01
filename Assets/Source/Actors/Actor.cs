@@ -1,4 +1,5 @@
-﻿using DungeonCrawl.Core;
+﻿using System;
+using DungeonCrawl.Core;
 using UnityEngine;
 
 namespace DungeonCrawl.Actors
@@ -35,6 +36,11 @@ namespace DungeonCrawl.Actors
             Speed = 5;
             
             OnAwake();
+        }
+
+        private void Start()
+        {
+            OnStart();
         }
 
         private void Update()
@@ -88,6 +94,10 @@ namespace DungeonCrawl.Actors
         }
         
         protected virtual void OnAwake()
+        {
+        }
+        
+        protected virtual void OnStart()
         {
         }
         

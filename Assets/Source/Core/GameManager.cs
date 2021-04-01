@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Source.Core;
+using UnityEngine;
 
 namespace DungeonCrawl.Core
 {
@@ -10,6 +11,7 @@ namespace DungeonCrawl.Core
         private void Start()
         {
             // MapLoader.LoadMap(1);
+            StatisticsUpdater.Singleton.Display();
         }
     }
 }

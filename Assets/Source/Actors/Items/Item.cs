@@ -1,14 +1,12 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using DungeonCrawl.Actors.Characters;
-using Source.Actors.Items;
 using Source.Core;
 
 // ReSharper disable All
 
 namespace DungeonCrawl.Actors.Items
 {
-    public class Item : MonoBehaviour, ISelectable
+    public class Item : MonoBehaviour, ISelectable, IUsable
     {
         [SerializeField] private string _name;
 
@@ -90,6 +88,11 @@ namespace DungeonCrawl.Actors.Items
 
         protected virtual void OnAwake()
         {
+        }
+
+        public virtual void Use()
+        {
+            Debug.Log("Item used...");
         }
     }
 }

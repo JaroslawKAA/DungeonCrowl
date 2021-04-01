@@ -24,7 +24,7 @@ namespace DungeonCrawl.Actors.Characters
 
         private void PickUp()
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Return))
             {
                 gameObject.GetComponent<ItemDetector>().Activate();
             }

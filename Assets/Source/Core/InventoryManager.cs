@@ -84,15 +84,22 @@ namespace Source.Core
                     MoveSelectorRight();
                     Display();
                 }
+                else if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Return))
+                {
+                    Inventory.Content[SelectedSlot].Use();
+                }
             }
         }
-
-        public void Display(bool showSelector = false)
+        /// <summary>
+        /// Refresh inventory state
+        /// </summary>
+        public void Display()
         {
             Clear();
 
             for (int i = 0; i < Inventory.Content.Count; i++)
             {
+                // Instantiate item icon and set correct image and amount value
                 GameObject gameObject = Instantiate(UIItemPrefab, InventorySlots[i].transform);
                 gameObject.GetComponent<Image>().sprite = Inventory.Content[i].Sprite;
                 gameObject.GetComponent<RectTransform>().localPosition = new Vector3();
@@ -107,7 +114,7 @@ namespace Source.Core
             else
                 DeselectSlot();
         }
-
+        
         public void ActivateInventory()
         {
             Activated = true;
@@ -121,7 +128,10 @@ namespace Source.Core
             _player.GetComponent<Player>().enabled = true;
             Display();
         }
-
+        
+        /// <summary>
+        /// Remove all icons from every slots.
+        /// </summary>
         private void Clear()
         {
             foreach (var slot in InventorySlots)

@@ -97,7 +97,7 @@ namespace Source.Core
         {
             Clear();
 
-            for (int i = 0; i < Inventory.Content.Count; i++)
+            for (int i = 0; i < Inventory.Content.Count && i < InventorySlots.Count; i++)
             {
                 // Instantiate item icon and set correct image and amount value
                 GameObject gameObject = Instantiate(UIItemPrefab, InventorySlots[i].transform);

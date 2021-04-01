@@ -1844,9 +1844,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af18569dfd4e451582b9bfe387affcf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: 
-  _value: 0
-  _amount: 0
+  _name: Ring
+  _value: 50
+  _amount: 1
 --- !u!1 &609750900
 GameObject:
   m_ObjectHideFlags: 0
@@ -2095,7 +2095,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &654704331
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2201,9 +2201,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af18569dfd4e451582b9bfe387affcf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: 
-  _value: 0
-  _amount: 0
+  _name: Coin
+  _value: 10
+  _amount: 1
 --- !u!212 &686629920
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2694,9 +2694,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37c39d8c72c94a85a0ae86839ecfe955, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: 
-  _value: 0
-  _amount: 0
+  _name: Helmet
+  _value: 5
+  _amount: 1
 --- !u!58 &777555385
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -3675,7 +3675,7 @@ MonoBehaviour:
   m_text: 'New TextNew Text sdadds dsaasdsaf dadsadsa dssdaaads dsasdasd dsasdsa
     sadsds sdsad '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 0}
+  m_fontAsset: {fileID: 11400000, guid: 8088ebaee8bbca341b982eb37c78a5a1, type: 2}
   m_sharedMaterial: {fileID: -2516067319761301891, guid: 8088ebaee8bbca341b982eb37c78a5a1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -5711,9 +5711,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af18569dfd4e451582b9bfe387affcf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: 
-  _value: 0
-  _amount: 0
+  _name: Big axe
+  _value: 3
+  _amount: 1
 --- !u!58 &1672999388
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -7521,9 +7521,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4b03c5299284fd9b45318496bb6c2e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: 
-  _value: 0
-  _amount: 0
+  _name: Axe
+  _value: 2
+  _amount: 1
 --- !u!1 &1873466577
 GameObject:
   m_ObjectHideFlags: 0
@@ -7620,9 +7620,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af18569dfd4e451582b9bfe387affcf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: 
-  _value: 0
-  _amount: 0
+  _name: Swor
+  _value: 4
+  _amount: 1
 --- !u!58 &1873466581
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -10261,9 +10261,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af18569dfd4e451582b9bfe387affcf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: 
-  _value: 0
-  _amount: 0
+  _name: Coin
+  _value: 10
+  _amount: 1
 --- !u!212 &2121260242
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10342,7 +10342,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 402424799510911928, guid: 33382192ffe7d4d4e968332475734695, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 548841395974040697, guid: 33382192ffe7d4d4e968332475734695, type: 3}
       propertyPath: m_Pivot.x

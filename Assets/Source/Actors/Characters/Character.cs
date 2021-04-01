@@ -1,4 +1,5 @@
-﻿using DungeonCrawl.Actors.Items;
+﻿using System;
+using DungeonCrawl.Actors.Items;
 using DungeonCrawl.Core;
 using Source.Core;
 using UnityEngine;
@@ -49,6 +50,14 @@ namespace DungeonCrawl.Actors.Characters
                 ActorManager.Singleton.DestroyActor(this);
             }
         }
+
+        public void Heal(int value)
+        {
+            _currentHealth += value;
+            _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
+            
+        }
+        
 
         protected abstract void OnDeath();
 

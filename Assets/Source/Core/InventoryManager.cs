@@ -86,8 +86,11 @@ namespace Source.Core
                 }
                 else if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Return))
                 {
+                    
                     Inventory.Content[SelectedSlot].Use();
+                    Display();
                 }
+                
             }
         }
         /// <summary>

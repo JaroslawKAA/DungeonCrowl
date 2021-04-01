@@ -150,7 +150,7 @@ namespace Source.Core
                 LeftRoll.SetActive(false);
 
             if (Inventory.Content.Count > SlotsCount
-                && _itemsOffset + SelectedSlot < Inventory.Content.Count - 1)
+                && _itemsOffset + SlotsCount - 1 < Inventory.Content.Count - 1)
                 RightRoll.SetActive(true);
             else
                 RightRoll.SetActive(false);

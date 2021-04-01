@@ -4202,9 +4202,10 @@ GameObject:
   - component: {fileID: 1608373976}
   - component: {fileID: 1608373975}
   - component: {fileID: 1608373977}
+  - component: {fileID: 1608373978}
   m_Layer: 0
   m_Name: kenney_transparent_365
-  m_TagString: Untagged
+  m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4290,6 +4291,24 @@ CircleCollider2D:
   m_Offset: {x: -0.029587269, y: 0}
   serializedVersion: 2
   m_Radius: 0.47041273
+--- !u!114 &1608373978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1608373974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a0c1274c8c8445299bd8f710902a403, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 5
+  _currentHealth: 50
+  _maxHealth: 50
+  _attack: 5
+  _protection: 5
+  message: Meauuu...
 --- !u!1 &1651326657
 GameObject:
   m_ObjectHideFlags: 0

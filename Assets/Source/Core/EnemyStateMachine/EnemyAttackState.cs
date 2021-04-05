@@ -2,7 +2,7 @@
 
 namespace Source.Core.EnemyStateMachine
 {
-    public class EnemyAttackState : State
+    public class EnemyAttackState : EnemyState
     {
         public EnemyAttackState(GameObject instance) : base(instance)
         {

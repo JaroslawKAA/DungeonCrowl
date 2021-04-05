@@ -2,12 +2,13 @@ using UnityEngine;
 
 namespace Source.Core.EnemyStateMachine
 {
+    [RequireComponent(typeof(Enemy))]
     public class EnemyStateMachine : StateMachine
     {
-        private IState IdleState { get; set; }
-        private IState PatrolState { get; set; }
-        private IState ChaseState { get; set; }
-        private IState AttackState { get; set; }
+        public EnemyIdleState IdleState { get; set; }
+        public EnemyPatrolState PatrolState { get; set; }
+        public EnemyChaseState ChaseState { get; set; }
+        public EnemyAttackState AttackState { get; set; }
 
         protected override void OnAwake()
         {
@@ -17,6 +18,11 @@ namespace Source.Core.EnemyStateMachine
             ChaseState = new EnemyChaseState(gameObject);
             AttackState = new EnemyAttackState(gameObject);
 
+            IdleState.OnAwake();
+            PatrolState.OnAwake();
+            ChaseState.OnAwake();
+            AttackState.OnAwake();
+            
             CurrentState = IdleState;
         }
 

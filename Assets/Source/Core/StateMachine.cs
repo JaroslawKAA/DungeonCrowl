@@ -6,7 +6,17 @@ namespace Source.Core
 {
     public abstract class StateMachine : MonoBehaviour
     {
-        protected IState CurrentState;
+        private IState _currentState;
+        public IState CurrentState
+        {
+            get => _currentState;
+            set
+            {
+                _currentState?.OnExit();
+                _currentState = value;
+                _currentState.OnEnter();
+            }
+        }
 
         private void Awake()
         {

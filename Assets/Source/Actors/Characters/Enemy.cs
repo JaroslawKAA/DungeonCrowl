@@ -1,11 +1,14 @@
 using DungeonCrawl;
 using DungeonCrawl.Actors;
 using DungeonCrawl.Actors.Characters;
+using Source.Core.EnemyStateMachine;
 using UnityEngine;
 
+[RequireComponent(typeof(EnemyStateMachine))]
 public class Enemy : Character, ISelectable 
 {
     public CharacterState CurrentState = CharacterState.Idle;
+    public GameObject[] PatrolPoints;
 
     public override string DefaultName { get; }
     protected override void OnDeath()

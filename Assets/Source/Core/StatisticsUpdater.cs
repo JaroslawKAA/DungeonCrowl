@@ -32,15 +32,15 @@ namespace Source.Core
             AttackText = GameObject.FindWithTag("AttackStatText");
             ProtectionText = GameObject.FindWithTag("ProtectionStatText");
             this.Player = GameObject.FindWithTag("Player").GetComponent<Player>();
-            
-            Display();
         }
 
         private void Start()
         {
             Display();
         }
-
+        
+        // TODO
+        // FIXME Don't update params every frame. Do it by properties.
         private void Update()
         {
             Display();

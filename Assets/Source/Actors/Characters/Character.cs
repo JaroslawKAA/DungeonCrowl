@@ -1,43 +1,43 @@
-﻿using System;
-using DungeonCrawl.Actors.Items;
+﻿using DungeonCrawl.Actors.Items;
 using DungeonCrawl.Core;
-using Source.Core;
+using Source.Actors.Items;
 using UnityEngine;
 
 namespace DungeonCrawl.Actors.Characters
 {
     public abstract class Character : Actor
     {
-        public Inventory Inventory { get; set; }
+        public Inventory Inventory { get; private set; }
+        public Equipment Equipment { get; private set; }
         
-        [SerializeField] private int _currentHealth;
-        public int CurrentHealth
+        [SerializeField] protected int _currentHealth;
+        public virtual int CurrentHealth
         {
             get => _currentHealth;
-            private set => _currentHealth = value;
+            protected set => _currentHealth = value;
         }
         
-        [SerializeField] private int _maxHealth = 100;
-        public int MaxHealth
+        [SerializeField] protected int _maxHealth = 100;
+        public virtual int MaxHealth
         {
             get => _maxHealth;
-            private set => _maxHealth = value;
+            protected set => _maxHealth = value;
         }
         
-        [SerializeField] private int _attack = 5;
-        public int Attack
+        [SerializeField] protected int _attack = 5;
+        public virtual int Attack
         {
             get => _attack;
-            private set => _attack = value;
+            protected set => _attack = value;
         }
         
-        [SerializeField] private int _protection = 5;
-        public int Protection
+        [SerializeField] protected int _protection = 5;
+        public virtual int Protection
         {
             get => _protection;
-            private set => _protection = value;
+            protected set => _protection = value;
         }
-        
+
         public void ApplyDamage(int damage)
         {
             MaxHealth -= damage;
@@ -70,12 +70,8 @@ namespace DungeonCrawl.Actors.Characters
         {
             base.OnAwake();
             Inventory = new Inventory();
+            Equipment = new Equipment();
             _currentHealth = MaxHealth;
-        }
-
-        protected override void OnStart()
-        {
-            base.OnStart();
         }
     }
 }

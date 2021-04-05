@@ -38,9 +38,15 @@ namespace Source.Core
         /// Index of selected slot in inventory.
         /// </summary>
         private int SelectedSlot { get; set; } = 0;
-
-        public float _slotSize;
-        public float _selectedSlotSize = 1;
+        
+        /// <summary>
+        /// Slot frame size
+        /// </summary>
+        private float _slotSize;
+        /// <summary>
+        /// Slot frame size after selection.
+        /// </summary>
+        private float _selectedSlotSize = 1;
         private GameObject _player;
 
         private void Awake()
@@ -103,8 +109,11 @@ namespace Source.Core
                 }
                 else if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Return))
                 {
-                    Inventory.Content[SelectedSlot].Use();
-                    Display();
+                    if (SelectedSlot + _itemsOffset < Inventory.Content.Count)
+                    {
+                        Inventory.Content[SelectedSlot + _itemsOffset].Use();
+                        Display();
+                    }
                 }
             }
         }
@@ -114,17 +123,15 @@ namespace Source.Core
         /// </summary>
         public void Display()
         {
-            Clear();
+            ClearAllInventorySlots();
             DisplayScrollHints();
 
             for (int i = 0; i < InventorySlots.Count; i++)
             {
                 // Instantiate item icon and set correct image and amount value
-                if (i < Inventory.Content.Count)
+                if (i < Inventory.Content.Count - _itemsOffset)
                 {
-                    GameObject gameObject = Instantiate(UIItemPrefab, InventorySlots[i].transform);
-                    gameObject.GetComponent<Image>().sprite = Inventory.Content[i + _itemsOffset].Sprite;
-                    gameObject.GetComponent<RectTransform>().localPosition = new Vector3();
+                    GameObject gameObject = InstantiateIcon(InventorySlots[i], Inventory.Content[i + _itemsOffset]);
                     gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =
                         Inventory.Content[i].Amount.ToString();
                 }
@@ -139,21 +146,12 @@ namespace Source.Core
                 DeselectSlot();
         }
 
-        /// <summary>
-        /// Display scrolling hints if you have more items than slots.
-        /// </summary>
-        public void DisplayScrollHints()
+        public GameObject InstantiateIcon(GameObject slot, Item item)
         {
-            if (_itemsOffset > 0)
-                LeftRoll.SetActive(true);
-            else
-                LeftRoll.SetActive(false);
-
-            if (Inventory.Content.Count > SlotsCount
-                && _itemsOffset + SlotsCount - 1 < Inventory.Content.Count - 1)
-                RightRoll.SetActive(true);
-            else
-                RightRoll.SetActive(false);
+            GameObject gameObject = Instantiate(UIItemPrefab, slot.transform);
+            gameObject.GetComponent<Image>().sprite = item.Sprite;
+            gameObject.GetComponent<RectTransform>().localPosition = new Vector3();
+            return gameObject;
         }
 
         public void ActivateInventory()
@@ -170,20 +168,79 @@ namespace Source.Core
             Display();
         }
 
+        public void DisplayEquipment()
+        {
+            Player player = GameObject.FindWithTag("Player").GetComponent<Player>();
+            
+            ClearSlot(ArmorSlot);
+            ClearSlot(HelmetSlot);
+            ClearSlot(WeaponSlot);
+            
+            // TODO FIXME don't use try-catch statement.
+            try
+            {
+                InstantiateIcon(ArmorSlot, player.Equipment.Armor);
+            }
+            catch (NullReferenceException e)
+            {
+                ClearSlot(ArmorSlot);
+            }
+            
+            try
+            {
+                InstantiateIcon(HelmetSlot, player.Equipment.Helmet);
+            }
+            catch (Exception e)
+            {
+                ClearSlot(HelmetSlot);
+            }
+            
+            try
+            {
+                InstantiateIcon(WeaponSlot, player.Equipment.Weapon);
+            }
+            catch (Exception e)
+            {
+                ClearSlot(WeaponSlot);
+            }
+                
+        }
+        
+        /// <summary>
+        /// Display scrolling hints if you have more items than slots.
+        /// </summary>
+        private void DisplayScrollHints()
+        {
+            if (_itemsOffset > 0)
+                LeftRoll.SetActive(true);
+            else
+                LeftRoll.SetActive(false);
+            
+            if (Inventory.Content.Count > SlotsCount
+                && _itemsOffset + SlotsCount - 1 < Inventory.Content.Count - 1)
+                RightRoll.SetActive(true);
+            else
+                RightRoll.SetActive(false);
+        }
+
         /// <summary>
         /// Remove all icons from every slots.
         /// </summary>
-        private void Clear()
+        private void ClearAllInventorySlots()
         {
             foreach (var slot in InventorySlots)
             {
-                foreach (Transform child in slot.transform)
-                {
-                    Destroy(child.gameObject);
-                }
+                ClearSlot(slot);
             }
         }
 
+        private void ClearSlot(GameObject slot)
+        {
+            foreach (Transform child in slot.transform)
+            {
+                Destroy(child.gameObject);
+            }
+        }
 
         private int _itemsOffset = 0;
 

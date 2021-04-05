@@ -156,11 +156,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6351981226543267393, guid: cecd11703a2e20b4c8d46104bb6e0cfe, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.2747087
+      value: -2.4
       objectReference: {fileID: 0}
     - target: {fileID: 6351981226543267393, guid: cecd11703a2e20b4c8d46104bb6e0cfe, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.8386
+      value: -6.82
       objectReference: {fileID: 0}
     - target: {fileID: 6351981226543267393, guid: cecd11703a2e20b4c8d46104bb6e0cfe, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1505,7 +1505,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _closeSprite: {fileID: -2194552121526101774, guid: c59ce84217b0ccf438f9a7cc4a5d62ef, type: 3}
   _openSprite: {fileID: 217636519169520981, guid: c59ce84217b0ccf438f9a7cc4a5d62ef, type: 3}
-  _isLock: 0
+  _isLock: 1
   KeyGameObject: {fileID: 452108874}
 --- !u!61 &568704902
 BoxCollider2D:
@@ -2461,9 +2461,13 @@ GameObject:
   m_Component:
   - component: {fileID: 787152809}
   - component: {fileID: 787152808}
+  - component: {fileID: 787152812}
+  - component: {fileID: 787152811}
+  - component: {fileID: 787152810}
+  - component: {fileID: 787152813}
   m_Layer: 0
   m_Name: kenney_transparent_409
-  m_TagString: Untagged
+  m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2508,7 +2512,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 3409456830757872311, guid: e44b7f78b0d7d86478e2926ad69f82c2, type: 3}
+  m_Sprite: {fileID: -7738095876268550701, guid: c59ce84217b0ccf438f9a7cc4a5d62ef, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2527,12 +2531,75 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 787152807}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.8385105, y: -0.71109605, z: 0}
+  m_LocalPosition: {x: 0.51, y: 1.56, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 278163680}
   m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &787152810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 787152807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e7c4feeeb8e5ff428a43ad52b9f79d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 20
+  ampithude: 1
+--- !u!114 &787152811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 787152807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77826440404829048868768eec9ed171, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 0
+  _currentHealth: 0
+  _maxHealth: 100
+  _attack: 5
+  _protection: 5
+  CurrentState: 0
+--- !u!58 &787152812
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 787152807}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.43721455
+--- !u!114 &787152813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 787152807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17ba9bc00942c1642a4d7ec3eb01c1c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  x: 0
+  y: 1
+  flippingDelay: 0.5
 --- !u!1 &895821875
 GameObject:
   m_ObjectHideFlags: 0
@@ -2886,8 +2953,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIItemPrefab: {fileID: 5860684381818998943, guid: cb519614eb726134fa7e6c1f9bd8538f, type: 3}
-  _slotSize: 0
-  _selectedSlotSize: 1
 --- !u!1 &1099672326
 GameObject:
   m_ObjectHideFlags: 0
@@ -4477,11 +4542,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1672999384}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af18569dfd4e451582b9bfe387affcf7, type: 3}
+  m_Script: {fileID: 11500000, guid: c4b03c5299284fd9b45318496bb6c2e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Big axe
-  _value: 3
+  _value: 4
   _amount: 1
 --- !u!58 &1672999388
 CircleCollider2D:
@@ -6386,11 +6451,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1873466577}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af18569dfd4e451582b9bfe387affcf7, type: 3}
+  m_Script: {fileID: 11500000, guid: c4b03c5299284fd9b45318496bb6c2e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Swor
-  _value: 4
+  _name: Sword
+  _value: 2
   _amount: 1
 --- !u!58 &1873466581
 CircleCollider2D:

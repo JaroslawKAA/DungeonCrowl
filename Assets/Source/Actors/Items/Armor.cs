@@ -1,5 +1,9 @@
+using System;
 using DungeonCrawl;
+using DungeonCrawl.Actors.Characters;
 using DungeonCrawl.Actors.Items;
+using Source.Core;
+using UnityEngine;
 
 namespace Source.Actors.Items
 {
@@ -7,11 +11,21 @@ namespace Source.Actors.Items
     {
         public int Protection { get; set; }
 
-        public Armor(string name,int protection) : base(name)
+        public Armor(string name, int protection) : base(name)
         {
             Protection = protection;
             this.Type = ItemType.Armor;
         }
-  
+
+        public override void Use()
+        {
+            Player player = GameObject.FindWithTag("Player").GetComponent<Player>();
+            player.Equipment.Armor = this;
+            
+            // else
+            // {
+            //     player.Equipment.Armor = null;
+            // }
+        }
     }
 }

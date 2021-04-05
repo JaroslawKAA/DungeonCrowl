@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 using DungeonCrawl.Actors.Items;
 using Source.Actors.Items;
 using Source.Core;
@@ -10,16 +11,69 @@ namespace DungeonCrawl.Actors.Characters
     {
         private Rigidbody2D _rb;
 
-        void Awake()
+        public override int CurrentHealth 
         {
+            get => _currentHealth;
+            protected set
+            {
+                _currentHealth = value;
+                StatisticsUpdater.Singleton.Display();
+            }
+        }
+        
+        public override int MaxHealth 
+        {
+            get => _maxHealth;
+            protected set
+            {
+                _maxHealth = value;
+                StatisticsUpdater.Singleton.Display();
+            }
+        }
+        
+        public override int Attack 
+        {
+            get => _attack;
+            protected set
+            {
+                _attack = value;
+                StatisticsUpdater.Singleton.Display();
+            }
+        }
+        
+        public override int Protection 
+        {
+            get => _protection;
+            protected set
+            {
+                _protection = value;
+                StatisticsUpdater.Singleton.Display();
+            }
+        }
+
+        protected override void OnAwake()
+        {
+            base.OnAwake();
             _rb = GetComponent<Rigidbody2D>();
-            this.Inventory = new Inventory();
         }
 
         protected override void OnUpdate(float deltaTime)
         {
             Move();
             PickUp();
+            AttackOpponent();
+        }
+
+        private void AttackOpponent()
+        {
+            
+            //TODO check ig player have equipped weapon
+            Transform hand = transform.GetChild(0);
+
+            if (Input.GetKey(KeyCode.E))
+                hand.localRotation = Quaternion.Euler(0, 0, -30);
+            else
+                hand.localRotation = Quaternion.Euler(0, 0, 0);
         }
 
         private void PickUp()

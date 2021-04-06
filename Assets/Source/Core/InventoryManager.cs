@@ -38,15 +38,17 @@ namespace Source.Core
         /// Index of selected slot in inventory.
         /// </summary>
         private int SelectedSlot { get; set; } = 0;
-        
+
         /// <summary>
         /// Slot frame size
         /// </summary>
         private float _slotSize;
+
         /// <summary>
         /// Slot frame size after selection.
         /// </summary>
         private float _selectedSlotSize = 1;
+
         private GameObject _player;
 
         private void Awake()
@@ -171,41 +173,27 @@ namespace Source.Core
         public void DisplayEquipment()
         {
             Player player = GameObject.FindWithTag("Player").GetComponent<Player>();
-            
+
             ClearSlot(ArmorSlot);
             ClearSlot(HelmetSlot);
             ClearSlot(WeaponSlot);
             
-            // TODO FIXME don't use try-catch statement.
-            try
-            {
-                InstantiateIcon(ArmorSlot, player.Equipment.Armor);
-            }
-            catch (NullReferenceException e)
-            {
-                ClearSlot(ArmorSlot);
-            }
-            
-            try
-            {
-                InstantiateIcon(HelmetSlot, player.Equipment.Helmet);
-            }
-            catch (Exception e)
-            {
-                ClearSlot(HelmetSlot);
-            }
-            
-            try
+            if (player.Equipment.Weapon != null)
             {
                 InstantiateIcon(WeaponSlot, player.Equipment.Weapon);
             }
-            catch (Exception e)
+
+            if (player.Equipment.Helmet != null)
             {
-                ClearSlot(WeaponSlot);
+                InstantiateIcon(HelmetSlot, player.Equipment.Helmet);
             }
-                
+
+            if (player.Equipment.Armor != null)
+            {
+                InstantiateIcon(ArmorSlot, player.Equipment.Armor);
+            }
         }
-        
+
         /// <summary>
         /// Display scrolling hints if you have more items than slots.
         /// </summary>
@@ -215,7 +203,7 @@ namespace Source.Core
                 LeftRoll.SetActive(true);
             else
                 LeftRoll.SetActive(false);
-            
+
             if (Inventory.Content.Count > SlotsCount
                 && _itemsOffset + SlotsCount - 1 < Inventory.Content.Count - 1)
                 RightRoll.SetActive(true);

@@ -47,7 +47,10 @@ namespace DungeonCrawl.Actors.Items
             this.Sprite = GetComponent<SpriteRenderer>().sprite;
             OnAwake();
         }
-
+        public void Activate(GameObject owner)
+        {
+            PickUp(owner);
+        }
         public void PickUp(GameObject inventoryOwner)
         {
             if (!IncrementAmoutIfExistInInventory(inventoryOwner))
@@ -55,7 +58,7 @@ namespace DungeonCrawl.Actors.Items
                 inventoryOwner.GetComponent<Character>().Inventory.Content.Add(this);
             }
 
-            Destroy(this.gameObject);
+            this.gameObject.SetActive(false);
 
             InventoryManager.Singleton.Display();
             MessageBox.Singleton.DisplayMessage($"I picked up {Amount}x {Name}! :)");
@@ -79,11 +82,6 @@ namespace DungeonCrawl.Actors.Items
             }
 
             return false;
-        }
-
-        public void Activate(GameObject owner)
-        {
-            PickUp(owner);
         }
 
         protected virtual void OnAwake()

@@ -1,3 +1,4 @@
+using System;
 using DungeonCrawl;
 using DungeonCrawl.Actors;
 using DungeonCrawl.Actors.Characters;
@@ -19,11 +20,16 @@ public class Enemy : Character, ISelectable
 
     public void Activate(GameObject owner)
     {
-        Debug.Log("Attack");
-        CurrentHealth -= owner.GetComponent<Character>().Attack;
-        if (CurrentHealth <= 0)
+        Character character = owner.GetComponent<Character>();
+        
+        if (character.Equipment.Weapon != null)
         {
-            OnDeath();
-        }        
+            Debug.Log("Attack");
+            CurrentHealth -= character.Attack;
+            if (CurrentHealth <= 0)
+            {
+                OnDeath();
+            }    
+        }
     }
 }

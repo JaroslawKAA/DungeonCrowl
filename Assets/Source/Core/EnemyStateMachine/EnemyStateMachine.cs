@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Source.Core.EnemyStateMachine
@@ -9,6 +10,27 @@ namespace Source.Core.EnemyStateMachine
         public EnemyPatrolState PatrolState { get; set; }
         public EnemyChaseState ChaseState { get; set; }
         public EnemyAttackState AttackState { get; set; }
+
+        public List<GameObject> VisibleCharacters
+        {
+            get => GetComponent<CharacterDetector>().visibleCharacters;
+        }
+
+        public GameObject Opponent
+        {
+            get
+            {
+                foreach (GameObject character in VisibleCharacters)
+                {
+                    if (character.CompareTag("Player"))
+                    {
+                        return character;
+                    }
+                }
+
+                return null;
+            }
+        }
 
         protected override void OnAwake()
         {
@@ -22,7 +44,7 @@ namespace Source.Core.EnemyStateMachine
             PatrolState.OnAwake();
             ChaseState.OnAwake();
             AttackState.OnAwake();
-            
+
             CurrentState = IdleState;
         }
 
@@ -30,6 +52,11 @@ namespace Source.Core.EnemyStateMachine
         {
             base.OnUpdate();
             CurrentState.OnUpdate();
+            
+            if (Opponent != null)
+            {
+                CurrentState = ChaseState;
+            }
         }
     }
 }

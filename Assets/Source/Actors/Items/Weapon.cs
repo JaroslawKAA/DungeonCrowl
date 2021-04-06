@@ -15,11 +15,15 @@ namespace Source.Actors.Items
         
         public override void Use()
         {
-            GameObject player = GameObject.FindWithTag("Player");
-            player.GetComponent<Player>().Equipment.Weapon = this;
-            Equip(player);
+            Player player = GameObject.FindWithTag("Player").GetComponent<Player>();
+            player.Equipment.Weapon = this;
+            Equip(player.gameObject);
         }
-
+        
+        /// <summary>
+        /// Display weapon.
+        /// </summary>
+        /// <param name="player">Player game object</param>
         public void Equip(GameObject player)
         {
             Transform hand = player.transform.GetChild(0);

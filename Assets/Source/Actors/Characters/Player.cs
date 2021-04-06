@@ -11,7 +11,7 @@ namespace DungeonCrawl.Actors.Characters
     {
         private Rigidbody2D _rb;
 
-        public override int CurrentHealth 
+        public override int CurrentHealth
         {
             get => _currentHealth;
             protected set
@@ -20,8 +20,8 @@ namespace DungeonCrawl.Actors.Characters
                 StatisticsUpdater.Singleton.Display();
             }
         }
-        
-        public override int MaxHealth 
+
+        public override int MaxHealth
         {
             get => _maxHealth;
             protected set
@@ -30,8 +30,8 @@ namespace DungeonCrawl.Actors.Characters
                 StatisticsUpdater.Singleton.Display();
             }
         }
-        
-        public override int Attack 
+
+        public override int Attack
         {
             get => _attack;
             protected set
@@ -40,8 +40,8 @@ namespace DungeonCrawl.Actors.Characters
                 StatisticsUpdater.Singleton.Display();
             }
         }
-        
-        public override int Protection 
+
+        public override int Protection
         {
             get => _protection;
             protected set
@@ -66,14 +66,16 @@ namespace DungeonCrawl.Actors.Characters
 
         private void AttackOpponent()
         {
-            
             //TODO check ig player have equipped weapon
-            Transform hand = transform.GetChild(0);
+            if (Equipment.Weapon != null)
+            {
+                Transform hand = transform.GetChild(0);
 
-            if (Input.GetKey(KeyCode.E))
-                hand.localRotation = Quaternion.Euler(0, 0, -30);
-            else
-                hand.localRotation = Quaternion.Euler(0, 0, 0);
+                if (Input.GetKey(KeyCode.E))
+                    hand.localRotation = Quaternion.Euler(0, 0, -30);
+                else
+                    hand.localRotation = Quaternion.Euler(0, 0, 0);
+            }
         }
 
         private void PickUp()
@@ -89,8 +91,8 @@ namespace DungeonCrawl.Actors.Characters
             Vector2 movement = new Vector2();
             float xMovement = 0;
             float yMovement = 0;
-            
-            
+
+
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             {
                 // Move up
@@ -119,14 +121,14 @@ namespace DungeonCrawl.Actors.Characters
             movement.y = yMovement;
             _rb.MovePosition(_rb.position + movement);
         }
-        
+
         protected override void OnDeath()
         {
             Debug.Log("Oh no, I'm dead!");
         }
 
         public override string DefaultName => "Player";
-        
+
         public bool CheckIfOwnKey(Key key)
         {
             foreach (Item item in this.Inventory.Content)
@@ -137,6 +139,7 @@ namespace DungeonCrawl.Actors.Characters
                     return true;
                 }
             }
+
             MessageBox.Singleton.DisplayMessage("Wrong key!");
             return false;
         }

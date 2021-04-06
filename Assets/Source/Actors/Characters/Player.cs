@@ -34,7 +34,7 @@ namespace DungeonCrawl.Actors.Characters
         public override int Attack
         {
             get => _attack;
-            protected set
+            set
             {
                 _attack = value;
                 StatisticsUpdater.Singleton.Display();
@@ -44,7 +44,7 @@ namespace DungeonCrawl.Actors.Characters
         public override int Protection
         {
             get => _protection;
-            protected set
+            set
             {
                 _protection = value;
                 StatisticsUpdater.Singleton.Display();

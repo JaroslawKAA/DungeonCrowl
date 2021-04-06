@@ -28,14 +28,14 @@ namespace DungeonCrawl.Actors.Characters
         public virtual int Attack
         {
             get => _attack;
-            protected set => _attack = value;
+            set => _attack = value;
         }
         
         [SerializeField] protected int _protection = 5;
         public virtual int Protection
         {
             get => _protection;
-            protected set => _protection = value;
+            set => _protection = value;
         }
 
         public void ApplyDamage(int damage)

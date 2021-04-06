@@ -9,7 +9,13 @@ namespace Source.Actors.Items
 {
     public class Armor : Item
     {
-        public int Protection { get; set; }
+        [SerializeField] private int _protection;
+
+        public int Protection
+        {
+            get => _protection;
+            set => _protection = value;
+        }
 
         public Armor(string name, int protection) : base(name)
         {
@@ -20,7 +26,16 @@ namespace Source.Actors.Items
         public override void Use()
         {
             Player player = GameObject.FindWithTag("Player").GetComponent<Player>();
-            player.Equipment.Armor = player.Equipment.Armor == this ? null : this;
+            if (player.Equipment.Armor == this)
+            {
+                player.Equipment.Armor = null;
+                player.Protection -= Protection;
+            }
+            else
+            {
+                player.Equipment.Armor = this;
+                player.Protection += Protection;
+            }
         }
     }
 }

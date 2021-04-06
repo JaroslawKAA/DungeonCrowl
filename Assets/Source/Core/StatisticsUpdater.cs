@@ -39,13 +39,6 @@ namespace Source.Core
             Display();
         }
         
-        // TODO
-        // FIXME Don't update params every frame. Do it by properties.
-        private void Update()
-        {
-            Display();
-        }
-
         public void Display()
         {
             HealthText.GetComponent<TextMeshProUGUI>().text = $"Health: {Player.CurrentHealth}/{Player.MaxHealth}";

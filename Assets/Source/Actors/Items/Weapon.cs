@@ -6,11 +6,17 @@ namespace Source.Actors.Items
 {
     public class Weapon : Item
     {
-        public int Demages { get; set; }
+        [SerializeField] private int _damages = 1;
 
-        public Weapon(string name, int demages) : base(name)
+        public int Damages
         {
-            Demages = demages;
+            get => _damages;
+            set => _damages = value;
+        }
+
+        public Weapon(string name, int damages) : base(name)
+        {
+            Damages = damages;
         }
 
         public override void Use()
@@ -19,15 +25,15 @@ namespace Source.Actors.Items
             if (player.Equipment.Weapon == this)
             {
                 player.Equipment.Weapon = null;
+                player.Attack -= Damages;
                 Unequip(player.gameObject);
             }
             else
             {
                 player.Equipment.Weapon = this;
+                player.Attack += Damages;
                 Equip(player.gameObject);
             }
-
-            
         }
 
         /// <summary>

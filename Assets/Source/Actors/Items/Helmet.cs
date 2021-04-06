@@ -16,7 +16,16 @@ namespace Source.Actors.Items
         public override void Use()
         {
             Player player = GameObject.FindWithTag("Player").GetComponent<Player>();
-            player.Equipment.Helmet = player.Equipment.Helmet == this ? null : this;
+            if (player.Equipment.Helmet == this)
+            {
+                player.Equipment.Helmet = null;
+                player.Protection -= Protection;
+            }
+            else
+            {
+                player.Equipment.Helmet = this;
+                player.Protection += Protection;
+            }
         }
     }
 }

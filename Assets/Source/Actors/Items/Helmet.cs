@@ -8,16 +8,15 @@ namespace Source.Actors.Items
 {
     public class Helmet : Armor
     {
-
-        public Helmet(string name,int protection) : base(name, protection)
+        public Helmet(string name, int protection) : base(name, protection)
         {
             this.Type = ItemType.Armor;
         }
-        
+
         public override void Use()
         {
             Player player = GameObject.FindWithTag("Player").GetComponent<Player>();
-            player.Equipment.Helmet = this;
+            player.Equipment.Helmet = player.Equipment.Helmet == this ? null : this;
         }
     }
 }

@@ -12,14 +12,37 @@ namespace Source.Actors.Items
         {
             Demages = demages;
         }
-        
+
         public override void Use()
         {
             Player player = GameObject.FindWithTag("Player").GetComponent<Player>();
-            player.Equipment.Weapon = this;
-            Equip(player.gameObject);
+            if (player.Equipment.Weapon == this)
+            {
+                player.Equipment.Weapon = null;
+                Unequip(player.gameObject);
+            }
+            else
+            {
+                player.Equipment.Weapon = this;
+                Equip(player.gameObject);
+            }
+
+            
         }
-        
+
+        /// <summary>
+        /// Remove weapon representation from player object.
+        /// </summary>
+        /// <param name="player">Player game object.</param>
+        private void Unequip(GameObject player)
+        {
+            Transform hand = player.transform.GetChild(0);
+            foreach (Transform child in hand)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
         /// <summary>
         /// Display weapon.
         /// </summary>
@@ -41,11 +64,11 @@ namespace Source.Actors.Items
         private GameObject CreateWeaponInstance(Transform parent)
         {
             GameObject weaponInstance = new GameObject();
-            
+
             SpriteRenderer sr = weaponInstance.AddComponent<SpriteRenderer>();
             sr.sprite = Sprite;
             sr.sortingOrder = 4;
-            
+
             return weaponInstance;
         }
     }

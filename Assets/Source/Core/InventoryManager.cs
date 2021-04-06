@@ -15,6 +15,11 @@ namespace Source.Core
         /// </summary>
         public GameObject UIItemPrefab;
 
+        /// <summary>
+        /// Item Prefab to spawn items representations in inventory. Contain item amount text value.
+        /// </summary>
+        public GameObject UIItemWithAmountPrefab;
+
         public static InventoryManager Singleton { get; private set; }
 
         private Inventory Inventory { get; set; }
@@ -148,9 +153,18 @@ namespace Source.Core
                 DeselectSlot();
         }
 
-        public GameObject InstantiateIcon(GameObject slot, Item item)
+        public GameObject InstantiateIcon(GameObject slot, Item item, bool withAmount = true)
         {
-            GameObject gameObject = Instantiate(UIItemPrefab, slot.transform);
+            GameObject gameObject;
+            if (withAmount)
+            {
+                gameObject = Instantiate(UIItemWithAmountPrefab, slot.transform);
+            }
+            else
+            {
+                gameObject = Instantiate(UIItemPrefab, slot.transform);
+            }
+            
             gameObject.GetComponent<Image>().sprite = item.Sprite;
             gameObject.GetComponent<RectTransform>().localPosition = new Vector3();
             return gameObject;
@@ -180,17 +194,17 @@ namespace Source.Core
             
             if (player.Equipment.Weapon != null)
             {
-                InstantiateIcon(WeaponSlot, player.Equipment.Weapon);
+                InstantiateIcon(WeaponSlot, player.Equipment.Weapon, false);
             }
 
             if (player.Equipment.Helmet != null)
             {
-                InstantiateIcon(HelmetSlot, player.Equipment.Helmet);
+                InstantiateIcon(HelmetSlot, player.Equipment.Helmet, false);
             }
 
             if (player.Equipment.Armor != null)
             {
-                InstantiateIcon(ArmorSlot, player.Equipment.Armor);
+                InstantiateIcon(ArmorSlot, player.Equipment.Armor, false);
             }
         }
 

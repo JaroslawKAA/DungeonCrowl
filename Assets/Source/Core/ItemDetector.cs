@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DungeonCrawl.Actors;
+using DungeonCrawl.Actors.Characters;
 using UnityEngine;
 
 // ReSharper disable All
@@ -47,9 +48,12 @@ namespace Source.Core
             set => _selectedItem = value;
         }
 
+        private AudioSource _audioSource;
+
         private void Awake()
         {
             ItemsAround = new List<GameObject>();
+            _audioSource = GetComponent<AudioSource>();
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -97,6 +101,14 @@ namespace Source.Core
         {
             if (SelectedItem != null)
             {
+                AudioClip pickUp = GetComponent<PlayerInteractionAudios>().pickUpItem;
+                if (SelectedItem.CompareTag("Item"))
+                {
+                    _audioSource.clip = pickUp;
+                    _audioSource.Play();
+                }
+                
+                
                 SelectedItem.GetComponent<ISelectable>().Activate(gameObject);
             }
         }

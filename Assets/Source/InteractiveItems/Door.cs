@@ -1,6 +1,7 @@
 ﻿using DungeonCrawl.Actors;
 using DungeonCrawl.Actors.Characters;
 using Source.Actors.Items;
+using Source.Core;
 using UnityEngine;
 
 // ReSharper disable All
@@ -26,11 +27,14 @@ namespace Source.InteractiveItems
         }
 
         private SpriteRenderer _spriteRenderer;
+        private AudioSource _audioSource;
 
         private void Awake()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _spriteRenderer.sprite = CloseSprite;
+
+            _audioSource = GetComponent<AudioSource>();
 
             Key = GetComponent<Door>().KeyGameObject.GetComponent<Key>();
         }
@@ -66,7 +70,8 @@ namespace Source.InteractiveItems
             IsOpen = true;
             _spriteRenderer.sprite = OpenSprite;
             GetComponent<Collider2D>().isTrigger = true;
-            // TODO Play sound.
+            // Play sound.
+            _audioSource.Play();
         }
 
         public void Close()
@@ -74,7 +79,8 @@ namespace Source.InteractiveItems
             IsOpen = false;
             _spriteRenderer.sprite = CloseSprite;
             GetComponent<Collider2D>().isTrigger = false;
-            // TODO Play sound.
+            // Play sound.
+            _audioSource.Play();
         }
 
         public void Unlock()
@@ -83,13 +89,15 @@ namespace Source.InteractiveItems
             Player p = player.GetComponent<Player>();
             if (p.CheckIfOwnKey(this.Key))
             {
+                MessageBox.Singleton.DisplayMessage("Correct key!");
                 IsLock = false;
                 Open();
-                // TODO Play sound
+                // Play sound
+                _audioSource.Play();
             }
             else
             {
-                // TODO Display communicate and play sound
+                MessageBox.Singleton.DisplayMessage("I need a key!");
             }
         }
 

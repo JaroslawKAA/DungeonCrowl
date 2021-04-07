@@ -60,7 +60,7 @@ namespace DungeonCrawl.Actors.Characters
         protected override void OnUpdate(float deltaTime)
         {
             Move();
-            PickUp();
+            ActivateSelected();
             AttackOpponent();
         }
 
@@ -77,11 +77,11 @@ namespace DungeonCrawl.Actors.Characters
             }
         }
 
-        private void PickUp()
+        private void ActivateSelected()
         {
             if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Return))
             {
-                gameObject.GetComponent<ItemDetector>().Activate();
+                GetComponent<ItemDetector>().Activate();
             }
         }
 
@@ -134,12 +134,10 @@ namespace DungeonCrawl.Actors.Characters
             {
                 if (item is Key && item == key)
                 {
-                    MessageBox.Singleton.DisplayMessage("Correct key!");
                     return true;
                 }
             }
-
-            MessageBox.Singleton.DisplayMessage("Wrong key!");
+            
             return false;
         }
     }

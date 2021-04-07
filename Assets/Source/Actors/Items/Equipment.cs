@@ -80,7 +80,6 @@ namespace Source.Actors.Items
             get => _weapon;
             set
             {
-                // FIXME TODO wrong adding attack points
                 if (value != null)
                 {
                     if (_weapon == null)

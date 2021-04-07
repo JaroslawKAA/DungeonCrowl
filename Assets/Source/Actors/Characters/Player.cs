@@ -66,7 +66,6 @@ namespace DungeonCrawl.Actors.Characters
 
         private void AttackOpponent()
         {
-            //TODO check ig player have equipped weapon
             if (Equipment.Weapon != null)
             {
                 Transform hand = transform.GetChild(0);

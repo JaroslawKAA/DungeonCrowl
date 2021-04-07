@@ -2,6 +2,7 @@ using System;
 using DungeonCrawl;
 using DungeonCrawl.Actors.Characters;
 using DungeonCrawl.Actors.Items;
+using Source.Actors.Characters;
 using Source.Core;
 using UnityEngine;
 

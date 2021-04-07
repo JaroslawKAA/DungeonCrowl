@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using DungeonCrawl.Actors.Characters;
 using DungeonCrawl.Actors.Items;
+using Source.Actors.Characters;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,9 +22,7 @@ namespace Source.Core
         public GameObject UIItemWithAmountPrefab;
 
         public static InventoryManager Singleton { get; private set; }
-
         private Inventory Inventory { get; set; }
-
         private List<GameObject> InventorySlots { get; set; }
         private GameObject HelmetSlot { get; set; }
         private GameObject ArmorSlot { get; set; }
@@ -32,9 +31,9 @@ namespace Source.Core
         private GameObject RightRoll { get; set; }
 
         /// <summary>
-        /// True if we opened inventory, ele false
+        /// True if we opened inventory, else false
         /// </summary>
-        private bool Activated { get; set; } = false;
+        public bool Activated { get; private set; }
 
         private int SlotsCount { get; set; }
 
@@ -42,7 +41,22 @@ namespace Source.Core
         /// <summary>
         /// Index of selected slot in inventory.
         /// </summary>
-        private int SelectedSlot { get; set; } = 0;
+        private int SelectedSlot { get; set; }
+
+        public Item SelectedItem
+        {
+            get
+            {
+                try
+                {
+                    return GetItem(SelectedSlot + _itemsOffset);
+                }
+                catch (Exception e)
+                {
+                    return null;
+                }
+            }
+        }
 
         /// <summary>
         /// Slot frame size
@@ -52,7 +66,7 @@ namespace Source.Core
         /// <summary>
         /// Slot frame size after selection.
         /// </summary>
-        private float _selectedSlotSize = 1;
+        private const float SelectedSlotSize = 1;
 
         private GameObject _player;
 
@@ -83,6 +97,7 @@ namespace Source.Core
 
             _slotSize = InventorySlots[0].GetComponent<RectTransform>().localScale.x;
             _player = GameObject.FindWithTag("Player");
+            _itemDescriptionText = GameObject.FindWithTag("ItemDescription").GetComponent<TextMeshProUGUI>();
         }
 
         private void Start()
@@ -131,18 +146,19 @@ namespace Source.Core
         public void Display()
         {
             ClearAllInventorySlots();
-            DisplayScrollHints();
 
             for (int i = 0; i < InventorySlots.Count; i++)
             {
                 // Instantiate item icon and set correct image and amount value
                 if (i < Inventory.Content.Count - _itemsOffset)
                 {
-                    GameObject gameObject = InstantiateIcon(InventorySlots[i], Inventory.Content[i + _itemsOffset]);
+                    Item currentItem = GetItem(i + _itemsOffset);
+                    GameObject gameObject = InstantiateIcon(InventorySlots[i], currentItem);
                     gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =
-                        Inventory.Content[i].Amount.ToString();
+                        currentItem.Amount.ToString();
                 }
-
+                
+                // Reset inventory size.
                 InventorySlots[i].GetComponent<RectTransform>().localScale =
                     new Vector3(_slotSize, _slotSize, _slotSize);
             }
@@ -151,6 +167,9 @@ namespace Source.Core
                 SelectSlot();
             else
                 DeselectSlot();
+
+            DisplayScrollHints();
+            DisplayDescription();
         }
 
         public GameObject InstantiateIcon(GameObject slot, Item item, bool withAmount = true)
@@ -164,7 +183,7 @@ namespace Source.Core
             {
                 gameObject = Instantiate(UIItemPrefab, slot.transform);
             }
-            
+
             gameObject.GetComponent<Image>().sprite = item.Sprite;
             gameObject.GetComponent<RectTransform>().localPosition = new Vector3();
             return gameObject;
@@ -184,6 +203,9 @@ namespace Source.Core
             Display();
         }
 
+        /// <summary>
+        /// Display equipped items.
+        /// </summary>
         public void DisplayEquipment()
         {
             Player player = GameObject.FindWithTag("Player").GetComponent<Player>();
@@ -191,7 +213,7 @@ namespace Source.Core
             ClearSlot(ArmorSlot);
             ClearSlot(HelmetSlot);
             ClearSlot(WeaponSlot);
-            
+
             if (player.Equipment.Weapon != null)
             {
                 InstantiateIcon(WeaponSlot, player.Equipment.Weapon, false);
@@ -205,6 +227,33 @@ namespace Source.Core
             if (player.Equipment.Armor != null)
             {
                 InstantiateIcon(ArmorSlot, player.Equipment.Armor, false);
+            }
+        }
+
+
+        /// <summary>
+        /// Get item from user inventory by index.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns>Index of item.</returns>
+        private Item GetItem(int index)
+        {
+            return Inventory.Content[index];
+        }
+
+        /// <summary>
+        /// Object in witch is displaying description.
+        /// </summary>
+        private TextMeshProUGUI _itemDescriptionText;
+
+        /// <summary>
+        /// Display selected item description.
+        /// </summary>
+        private void DisplayDescription()
+        {
+            if (Activated)
+            {
+                _itemDescriptionText.text = SelectedItem != null ? SelectedItem.ToString() : "";
             }
         }
 
@@ -236,6 +285,10 @@ namespace Source.Core
             }
         }
 
+        /// <summary>
+        /// Remove icon from slot.
+        /// </summary>
+        /// <param name="slot"></param>
         private void ClearSlot(GameObject slot)
         {
             foreach (Transform child in slot.transform)
@@ -290,13 +343,19 @@ namespace Source.Core
             }
         }
 
+        /// <summary>
+        /// Make bigger slot.
+        /// </summary>
         private void SelectSlot()
         {
-            InventorySlots[SelectedSlot].transform.localScale = new Vector3(_selectedSlotSize,
-                _selectedSlotSize,
-                _selectedSlotSize);
+            InventorySlots[SelectedSlot].transform.localScale = new Vector3(SelectedSlotSize,
+                SelectedSlotSize,
+                SelectedSlotSize);
         }
 
+        /// <summary>
+        /// Make standard size slot.
+        /// </summary>
         private void DeselectSlot()
         {
             InventorySlots[SelectedSlot].GetComponent<RectTransform>().localScale = new Vector3(_slotSize,

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using DungeonCrawl.Actors;
 using DungeonCrawl.Actors.Characters;
 using TMPro;
@@ -80,14 +79,28 @@ namespace Source.Core
         private void Update()
         {
             Select();
-            DisplayDescription();
+            if (!InventoryManager.Singleton.Activated)
+            {
+                if (SelectedItem != null)
+                {
+                    DisplayDescription();
+                }
+                else
+                {
+                    ClearDescription();
+                }
+            }
         }
 
         private void DisplayDescription()
         {
             string description = SelectedItem.GetComponent<ISelectable>().ToString();
             _itemDescription.text = description;
+        }
 
+        private void ClearDescription()
+        {
+            _itemDescription.text = "";
         }
 
         /// <summary>

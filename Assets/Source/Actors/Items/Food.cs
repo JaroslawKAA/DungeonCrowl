@@ -1,5 +1,6 @@
 ﻿using DungeonCrawl.Actors.Characters;
 using DungeonCrawl.Actors.Items;
+using Source.Actors.Characters;
 using UnityEngine;
 
 namespace Source.Actors.Items
@@ -7,8 +8,13 @@ namespace Source.Actors.Items
     public class Food : Item
     {
         [SerializeField] private int _healing;
-        private int Healing { get; set; }
-        
+
+        public int Healing
+        {
+            get => _healing;
+            set => _healing = value;
+        }
+
         public Food(string name, int healing) : base(name)
         {
             Healing = healing;
@@ -17,9 +23,13 @@ namespace Source.Actors.Items
         public override void Use()
         {
             Player player = GameObject.FindWithTag("Player").GetComponent<Player>();
-            player.Heal(_healing);
+            player.Heal(Healing);
             player.Inventory.Content.Remove(this);
+        }
 
+        public override string ToString()
+        {
+            return $"{Name}\nHealing {Healing}";
         }
     }
 }

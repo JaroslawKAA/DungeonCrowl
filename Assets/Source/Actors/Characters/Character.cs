@@ -69,8 +69,8 @@ namespace DungeonCrawl.Actors.Characters
 
         public void Heal(int value)
         {
-            _currentHealth += value;
-            _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
+            CurrentHealth += value;
+            CurrentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
         }
 
 

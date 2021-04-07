@@ -1,5 +1,6 @@
 using DungeonCrawl.Actors.Characters;
 using DungeonCrawl.Actors.Items;
+using Source.Actors.Characters;
 using UnityEngine;
 
 namespace Source.Actors.Items
@@ -78,7 +79,7 @@ namespace Source.Actors.Items
 
         public override string ToString()
         {
-            return $"{Name}\nDamage:{Damages.ToString()}";
+            return $"{Name}\nDamage: {Damages.ToString()}";
         }
     }
 }

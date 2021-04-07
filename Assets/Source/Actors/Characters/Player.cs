@@ -1,11 +1,11 @@
-﻿using System;
-using System.Runtime.CompilerServices;
+﻿using DungeonCrawl.Actors;
+using DungeonCrawl.Actors.Characters;
 using DungeonCrawl.Actors.Items;
 using Source.Actors.Items;
 using Source.Core;
 using UnityEngine;
 
-namespace DungeonCrawl.Actors.Characters
+namespace Source.Actors.Characters
 {
     public class Player : Character
     {
@@ -51,10 +51,13 @@ namespace DungeonCrawl.Actors.Characters
             }
         }
 
+        private AudioSource _audioSource;
+
         protected override void OnAwake()
         {
             base.OnAwake();
             _rb = GetComponent<Rigidbody2D>();
+            _audioSource = GetComponent<AudioSource>();
         }
 
         protected override void OnUpdate(float deltaTime)
@@ -66,15 +69,20 @@ namespace DungeonCrawl.Actors.Characters
 
         private void AttackOpponent()
         {
-            if (Equipment.Weapon != null)
-            {
-                Transform hand = transform.GetChild(0);
 
-                if (Input.GetKey(KeyCode.E))
-                    hand.localRotation = Quaternion.Euler(0, 0, -30);
-                else
-                    hand.localRotation = Quaternion.Euler(0, 0, 0);
+            // If we have equipped weapon and character (With component Character) is selected.
+            if (Equipment.Weapon == null ||
+                !(GetComponent<ItemDetector>().SelectedItem?.GetComponent<ISelectable>() is Enemy)) return;
+            
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                // Play music
+                _audioSource.clip = GetComponent<PlayerInteractionAudios>().fight;
+                _audioSource.Play();
             }
+                
+            Transform hand = transform.GetChild(0);
+            hand.localRotation = Input.GetKey(KeyCode.E) ? Quaternion.Euler(0, 0, -30) : Quaternion.Euler(0, 0, 0);
         }
 
         private void ActivateSelected()
@@ -137,7 +145,7 @@ namespace DungeonCrawl.Actors.Characters
                     return true;
                 }
             }
-            
+
             return false;
         }
     }

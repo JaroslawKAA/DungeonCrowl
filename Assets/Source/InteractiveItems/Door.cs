@@ -1,5 +1,6 @@
 ﻿using DungeonCrawl.Actors;
 using DungeonCrawl.Actors.Characters;
+using Source.Actors.Characters;
 using Source.Actors.Items;
 using Source.Core;
 using UnityEngine;
@@ -112,6 +113,11 @@ namespace Source.InteractiveItems
                 else
                     Open();
             }
+        }
+
+        public override string ToString()
+        {
+            return "Door";
         }
     }
 }

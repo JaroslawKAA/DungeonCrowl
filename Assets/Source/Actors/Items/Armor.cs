@@ -29,12 +29,10 @@ namespace Source.Actors.Items
             if (player.Equipment.Armor == this)
             {
                 player.Equipment.Armor = null;
-                player.Protection -= Protection;
             }
             else
             {
                 player.Equipment.Armor = this;
-                player.Protection += Protection;
             }
         }
     }

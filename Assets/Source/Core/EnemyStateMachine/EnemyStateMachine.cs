@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -32,6 +33,19 @@ namespace Source.Core.EnemyStateMachine
             }
         }
 
+        public float? DistanceToOpponent
+        {
+            get
+            {
+                if (Opponent != null)
+                {
+                    return Vector2.Distance(transform.position, Opponent.transform.position);
+                }
+
+                return null;
+            }
+        }
+
         protected override void OnAwake()
         {
             base.OnAwake();
@@ -52,11 +66,16 @@ namespace Source.Core.EnemyStateMachine
         {
             base.OnUpdate();
             CurrentState.OnUpdate();
-            
-            if (Opponent != null)
+
+            if (Opponent != null && CurrentState != AttackState)
             {
                 CurrentState = ChaseState;
             }
+        }
+
+        public void RunCoroutine(IEnumerator coroutine)
+        {
+            StartCoroutine(coroutine);
         }
     }
 }

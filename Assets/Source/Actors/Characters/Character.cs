@@ -9,45 +9,61 @@ namespace DungeonCrawl.Actors.Characters
     {
         public Inventory Inventory { get; private set; }
         public Equipment Equipment { get; private set; }
-        
-        [SerializeField] protected int _currentHealth;
+
+        [Header("Attributes")] [SerializeField]
+        protected int _currentHealth;
+
         public virtual int CurrentHealth
         {
             get => _currentHealth;
             protected set => _currentHealth = value;
         }
-        
+
         [SerializeField] protected int _maxHealth = 100;
+
         public virtual int MaxHealth
         {
             get => _maxHealth;
             protected set => _maxHealth = value;
         }
-        
+
         [SerializeField] protected int _attack = 5;
+
         public virtual int Attack
         {
             get => _attack;
             set => _attack = value;
         }
-        
+
         [SerializeField] protected int _protection = 5;
+
         public virtual int Protection
         {
             get => _protection;
             set => _protection = value;
         }
 
+        private Sprite _idleSprite;
+
+        public Sprite IdleSprite
+        {
+            get => _idleSprite;
+            private set => _idleSprite = value;
+        }
+
         public void ApplyDamage(int damage)
         {
-            MaxHealth -= damage;
-
-            if (MaxHealth <= 0)
+            if (damage > this.Protection)
             {
-                // Die
-                OnDeath();
+                CurrentHealth -= damage - this.Protection;
 
-                ActorManager.Singleton.DestroyActor(this);
+                if (CurrentHealth <= 0)
+                {
+                    // Die
+                    OnDeath();
+
+                    ActorManager.Singleton.DestroyActor(this);
+                }
             }
         }
 
@@ -55,9 +71,8 @@ namespace DungeonCrawl.Actors.Characters
         {
             _currentHealth += value;
             _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
-            
         }
-        
+
 
         protected abstract void OnDeath();
 
@@ -70,8 +85,9 @@ namespace DungeonCrawl.Actors.Characters
         {
             base.OnAwake();
             Inventory = new Inventory();
-            Equipment = new Equipment();
+            Equipment = new Equipment(this);
             _currentHealth = MaxHealth;
+            IdleSprite = GetComponent<SpriteRenderer>().sprite;
         }
     }
 }

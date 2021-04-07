@@ -8,6 +8,10 @@ namespace Source.Core.EnemyStateMachine
     public class EnemyPatrolState : EnemyState
     {
         private GameObject[] PatrolPoints { get; set; }
+        
+        /// <summary>
+        /// Current patrol point.
+        /// </summary>
         private GameObject Target { get; set; }
         private int TargetIndex { get; set; } = 0;
         private float MovementTolerance { get; } = 0.3f;
@@ -30,9 +34,7 @@ namespace Source.Core.EnemyStateMachine
             {
                 int chanceToChangeState = new Random().Next(1, 11);
                 if (chanceToChangeState < 4)
-                {
                     this.EnemyStateMachine.CurrentState = this.EnemyStateMachine.IdleState;
-                }
                 
                 TargetIndex = TargetIndex + 1 < PatrolPoints.Length ? ++TargetIndex : 0;
                 Target =  PatrolPoints[TargetIndex];
@@ -49,6 +51,7 @@ namespace Source.Core.EnemyStateMachine
         public override void OnEnter()
         {
             base.OnEnter();
+            Debug.Log($"{Enemy.name} - Enter patrol state.");
             Enemy.CurrentState = CharacterState.Patrol;
         }
     }

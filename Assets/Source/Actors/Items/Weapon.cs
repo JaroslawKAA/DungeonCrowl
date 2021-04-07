@@ -25,13 +25,11 @@ namespace Source.Actors.Items
             if (player.Equipment.Weapon == this)
             {
                 player.Equipment.Weapon = null;
-                player.Attack -= Damages;
                 Unequip(player.gameObject);
             }
             else
             {
                 player.Equipment.Weapon = this;
-                player.Attack += Damages;
                 Equip(player.gameObject);
             }
         }

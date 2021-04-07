@@ -8,8 +8,11 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyStateMachine))]
 public class Enemy : Character, ISelectable 
 {
+    [Header("State machine")]
     public CharacterState CurrentState = CharacterState.Idle;
     public GameObject[] PatrolPoints;
+    public Sprite AttackSprite;
+    public float attackDelay = 1;
 
     public override string DefaultName { get; }
     protected override void OnDeath()

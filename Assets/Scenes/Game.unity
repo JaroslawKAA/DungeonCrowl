@@ -2350,14 +2350,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 3
   _currentHealth: 0
-  _maxHealth: 5
-  _attack: 5
-  _protection: 5
+  _maxHealth: 20
+  _attack: 10
+  _protection: 3
   CurrentState: 0
   PatrolPoints:
   - {fileID: 885796014}
   - {fileID: 239098329}
   - {fileID: 1896853301}
+  AttackSprite: {fileID: 21300000, guid: b43d8c7d518d34941b3d4514fa326a6c, type: 3}
+  attackDelay: 1
 --- !u!58 &787152812
 CircleCollider2D:
   m_ObjectHideFlags: 0

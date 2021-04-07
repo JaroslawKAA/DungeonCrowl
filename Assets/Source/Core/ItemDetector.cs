@@ -10,8 +10,14 @@ namespace Source.Core
 {
     public class ItemDetector : MonoBehaviour
     {
+        /// <summary>
+        /// Prefab of the object witch highlight selected item.
+        /// </summary>
         public GameObject selector;
 
+        /// <summary>
+        /// Items with those tags are detect.
+        /// </summary>
         private readonly String[] DETECTABLE_TAGS = new String[]
         {
             "Interactive",
@@ -21,6 +27,9 @@ namespace Source.Core
 
         private List<GameObject> _itemsAround;
 
+        /// <summary>
+        /// Detected items.
+        /// </summary>
         public List<GameObject> ItemsAround
         {
             get => _itemsAround;
@@ -29,6 +38,9 @@ namespace Source.Core
 
         private GameObject _selectedItem;
 
+        /// <summary>
+        /// Selected item.
+        /// </summary>
         public GameObject SelectedItem
         {
             get => _selectedItem;
@@ -45,8 +57,6 @@ namespace Source.Core
             if (DETECTABLE_TAGS.Contains(other.tag))
             {
                 ItemsAround.Add(other.gameObject);
-
-                Select();
             }
         }
 
@@ -55,9 +65,12 @@ namespace Source.Core
             if (DETECTABLE_TAGS.Contains(other.tag))
             {
                 RemoveItemFromItemsAround(other.gameObject);
-
-                Select();
             }
+        }
+
+        private void Update()
+        {
+            Select();
         }
 
         /// <summary>

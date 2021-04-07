@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DungeonCrawl;
+using UnityEngine;
 
 namespace Source.Core.EnemyStateMachine
 {
@@ -12,7 +13,8 @@ namespace Source.Core.EnemyStateMachine
         public override void OnEnter()
         {
             base.OnEnter();
-            Debug.Log("Enter chase state");
+            Debug.Log($"{Enemy.name} - Enter chase state");
+            Enemy.CurrentState = CharacterState.Chase;
         }
 
         public override void OnUpdate()
@@ -25,12 +27,13 @@ namespace Source.Core.EnemyStateMachine
             }
             else
             {
-                float distance = Vector2.Distance(Instance.transform.position,
-                    EnemyStateMachine.Opponent.transform.position);
-
-                if (distance > 1.2f)
+                if (EnemyStateMachine.DistanceToOpponent > 1.2f)
                 {
                     Enemy.Move(EnemyStateMachine.Opponent.transform.position);
+                }
+                else
+                {
+                    EnemyStateMachine.CurrentState = EnemyStateMachine.AttackState;
                 }
             }
         }

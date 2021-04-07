@@ -35,4 +35,9 @@ public class Enemy : Character, ISelectable
             }    
         }
     }
+
+    public override string ToString()
+    {
+        return $"{Name}\nLive:{CurrentHealth.ToString()}/{MaxHealth.ToString()}";
+    }
 }

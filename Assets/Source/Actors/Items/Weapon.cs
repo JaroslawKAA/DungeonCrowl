@@ -75,5 +75,10 @@ namespace Source.Actors.Items
 
             return weaponInstance;
         }
+
+        public override string ToString()
+        {
+            return $"{Name}\nDamage:{Damages.ToString()}";
+        }
     }
 }

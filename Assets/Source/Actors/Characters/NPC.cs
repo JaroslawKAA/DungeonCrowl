@@ -19,5 +19,10 @@ namespace DungeonCrawl.Actors.Characters
         {
             MessageBox.Singleton.DisplayMessage(message);
         }
+
+        public override string ToString()
+        {
+            return $"{Name}";
+        }
     }
 }

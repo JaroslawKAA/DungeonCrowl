@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using DungeonCrawl.Actors;
 using DungeonCrawl.Actors.Characters;
+using TMPro;
 using UnityEngine;
 
 // ReSharper disable All
@@ -50,10 +52,13 @@ namespace Source.Core
 
         private AudioSource _audioSource;
 
+        private TextMeshProUGUI _itemDescription;
+
         private void Awake()
         {
             ItemsAround = new List<GameObject>();
             _audioSource = GetComponent<AudioSource>();
+            _itemDescription = GameObject.FindWithTag("ItemDescription").GetComponent<TextMeshProUGUI>();
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -75,6 +80,14 @@ namespace Source.Core
         private void Update()
         {
             Select();
+            DisplayDescription();
+        }
+
+        private void DisplayDescription()
+        {
+            string description = SelectedItem.GetComponent<ISelectable>().ToString();
+            _itemDescription.text = description;
+
         }
 
         /// <summary>

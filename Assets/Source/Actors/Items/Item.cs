@@ -92,5 +92,10 @@ namespace DungeonCrawl.Actors.Items
         {
             Debug.Log("Item used...");
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

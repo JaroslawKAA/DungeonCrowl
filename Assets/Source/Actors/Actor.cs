@@ -6,8 +6,17 @@ namespace DungeonCrawl.Actors
 {
     public abstract class Actor : MonoBehaviour
     {
+        [SerializeField] private string _name;
+
+        public string Name
+        {
+            get => _name; 
+            set => _name = value;
+        }
+      
         // Unity inspector params
         [SerializeField] private float _speed = 5;
+      
 
         public float Speed
         {

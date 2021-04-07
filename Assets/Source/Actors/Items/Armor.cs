@@ -35,5 +35,11 @@ namespace Source.Actors.Items
                 player.Equipment.Armor = this;
             }
         }
+
+        public override string ToString()
+        {
+            
+            return $"{Name} \n Protection: {Protection.ToString()}" ; 
+        }
     }
 }

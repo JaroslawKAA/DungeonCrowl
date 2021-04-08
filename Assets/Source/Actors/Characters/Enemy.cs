@@ -15,6 +15,8 @@ public class Enemy : Character, ISelectable
     public float attackDelay = 1;
 
     public override string DefaultName { get; }
+
+    
     protected override void OnDeath()
     {
         Debug.Log($"Enemy - {name} is dead.");
@@ -27,8 +29,7 @@ public class Enemy : Character, ISelectable
         
         if (character.Equipment.Weapon != null)
         {
-            Debug.Log("Attack");
-            CurrentHealth -= character.Attack;
+            ApplyDamage(character.Attack);
             if (CurrentHealth <= 0)
             {
                 OnDeath();

@@ -1,5 +1,4 @@
 using DungeonCrawl;
-using DungeonCrawl.Actors.Items;
 
 namespace Source.Actors.Items
 {

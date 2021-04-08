@@ -5,6 +5,22 @@ using UnityEngine;
 
 public class CharacterDetector : MonoBehaviour
 {
+    [SerializeField] private bool _xRay;
+
+    public bool XRay
+    {
+        get => _xRay;
+        set => _xRay = value;
+    }
+
+    [SerializeField] private LayerMask _visionMask;
+
+    public LayerMask VisionMask
+    {
+        get => _visionMask;
+        set => _visionMask = value;
+    }
+
     public List<GameObject> visibleCharacters;
 
     [SerializeField] private float _viewDistance;
@@ -19,8 +35,20 @@ public class CharacterDetector : MonoBehaviour
     {
         if (other.CompareTag("Character") || other.CompareTag("Player"))
         {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position,
-                other.transform.position - transform.position);
+            RaycastHit2D hit;
+            if (XRay)
+            {
+                hit = Physics2D.Raycast(transform.position,
+                    other.transform.position - transform.position,
+                    10,
+                    VisionMask);
+            }
+            else
+            {
+                hit = Physics2D.Raycast(transform.position,
+                    other.transform.position - transform.position);
+            }
+            
             if (hit.collider != null
                 && (hit.collider.CompareTag("Character")
                     || hit.collider.CompareTag("Player")))
@@ -46,7 +74,7 @@ public class CharacterDetector : MonoBehaviour
     void Update()
     {
         List<GameObject> updatedListOfVisibleCharacters = new List<GameObject>();
-        
+
         foreach (GameObject character in visibleCharacters)
         {
             float distance = Vector2.Distance(transform.position, character.transform.position);

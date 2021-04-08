@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DungeonCrawl.Actors.Characters;
 using DungeonCrawl.Actors.Items;
 using Source.Actors.Characters;
+using Source.Actors.Items;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

@@ -72,10 +72,5 @@ namespace Source.Core.EnemyStateMachine
                 CurrentState = ChaseState;
             }
         }
-
-        public void RunCoroutine(IEnumerator coroutine)
-        {
-            StartCoroutine(coroutine);
-        }
     }
 }

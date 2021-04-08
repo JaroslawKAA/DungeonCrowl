@@ -1,8 +1,5 @@
-using System;
 using DungeonCrawl;
-using DungeonCrawl.Actors.Characters;
 using Source.Actors.Characters;
-using Source.Core;
 using UnityEngine;
 
 namespace Source.Actors.Items

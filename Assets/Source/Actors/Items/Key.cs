@@ -1,7 +1,4 @@
-using DungeonCrawl;
 using DungeonCrawl.Actors.Items;
-using Source.InteractiveItems;
-using UnityEngine;
 
 namespace Source.Actors.Items
 {

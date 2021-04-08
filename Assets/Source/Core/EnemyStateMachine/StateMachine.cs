@@ -1,8 +1,6 @@
-﻿using System;
-using Source.Core.EnemyStateMachine;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Source.Core
+namespace Source.Core.EnemyStateMachine
 {
     public abstract class StateMachine : MonoBehaviour
     {

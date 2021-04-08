@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using DungeonCrawl.Actors.Characters;
+using Source.Actors.Items;
 using Source.Core;
 
 // ReSharper disable All

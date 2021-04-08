@@ -2,7 +2,7 @@
 
 namespace Source.Core.EnemyStateMachine
 {
-    public class EnemyState : State
+    public abstract class EnemyState : State
     {
         protected EnemyStateMachine EnemyStateMachine { get; set; }
         protected Enemy Enemy { get; set; }

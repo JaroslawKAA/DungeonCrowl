@@ -10,6 +10,9 @@ namespace Source.Core.EnemyStateMachine
     public class EnemyAttackState : EnemyState
     {
         public float Timer { get; set; }
+
+        private AudioSource _audioSource;
+
         public EnemyAttackState(GameObject instance) : base(instance)
         {
         }
@@ -19,7 +22,7 @@ namespace Source.Core.EnemyStateMachine
             base.OnEnter();
 
             Timer = Enemy.attackDelay;
-            
+
             Debug.Log($"{Enemy.name} - Enter Attack state.");
             Enemy.CurrentState = CharacterState.Attack;
         }
@@ -39,34 +42,48 @@ namespace Source.Core.EnemyStateMachine
                 Timer -= Time.deltaTime;
             else
             {
+                _audioSource.Play();
                 SetAttackSprite();
+                _audioSource.Play();
                 EnemyStateMachine.Opponent.GetComponent<Character>().ApplyDamage(Enemy.Attack);
                 Timer = Enemy.attackDelay;
             }
         }
+
         /// <summary>
         /// Set attack sprite and after 0.5 s. return idle sprite.
         /// </summary>
         public void SetAttackSprite()
         {
             SpriteRenderer sr = Enemy.gameObject.GetComponent<SpriteRenderer>();
-            
+
             sr.sprite = Enemy.AttackSprite;
             sr.flipX = false;
             sr.flipY = false;
-            
-            Enemy.gameObject.GetComponent<FlippingSprite>().enabled = false;
-            
+            FlippingSprite flippingSprite = Enemy.gameObject.GetComponent<FlippingSprite>();
+            if (flippingSprite != null)
+                flippingSprite.enabled = false;
+
+
             IEnumerator coroutine = ReturnIdleSprite();
-            EnemyStateMachine.RunCoroutine(coroutine);
+            EnemyStateMachine.StartCoroutine(coroutine);
         }
+
         private IEnumerator ReturnIdleSprite()
         {
-            yield return new WaitForSeconds(0.5f);
-            
+            yield return new WaitForSeconds(0.4f);
+
             SpriteRenderer sr = Enemy.gameObject.GetComponent<SpriteRenderer>();
             sr.sprite = Enemy.IdleSprite;
-            Enemy.gameObject.GetComponent<FlippingSprite>().enabled = true;
+            FlippingSprite flippingSprite = Enemy.gameObject.GetComponent<FlippingSprite>();
+            if (flippingSprite != null)
+                flippingSprite.enabled = true;
+        }
+
+        public override void OnAwake()
+        {
+            base.OnAwake();
+            _audioSource = EnemyStateMachine.GetComponent<AudioSource>();
         }
     }
 }

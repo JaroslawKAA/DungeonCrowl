@@ -51,6 +51,7 @@ namespace Source.Actors.Characters
             }
         }
 
+        private Transform Hand { get; set; }
         private AudioSource _audioSource;
 
         protected override void OnAwake()
@@ -58,6 +59,7 @@ namespace Source.Actors.Characters
             base.OnAwake();
             _rb = GetComponent<Rigidbody2D>();
             _audioSource = GetComponent<AudioSource>();
+            Hand = transform.GetChild(0);
         }
 
         protected override void OnUpdate(float deltaTime)
@@ -69,20 +71,22 @@ namespace Source.Actors.Characters
 
         private void AttackOpponent()
         {
+            if (Equipment.Weapon != null)
+                Hand.localRotation = Input.GetKey(KeyCode.E) 
+                    ? Quaternion.Euler(0, 0, -30) 
+                    : Quaternion.Euler(0, 0, 0);
 
             // If we have equipped weapon and character (With component Character) is selected.
-            if (Equipment.Weapon == null ||
-                !(GetComponent<ItemDetector>().SelectedItem?.GetComponent<ISelectable>() is Enemy)) return;
-            
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Equipment.Weapon != null &&
+                GetComponent<ItemDetector>().SelectedItem?.GetComponent<ISelectable>() is Enemy)
             {
-                // Play music
-                _audioSource.clip = GetComponent<PlayerInteractionAudios>().fight;
-                _audioSource.Play();
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    // Play music
+                    _audioSource.clip = GetComponent<PlayerInteractionAudios>().fight;
+                    _audioSource.Play();
+                }
             }
-                
-            Transform hand = transform.GetChild(0);
-            hand.localRotation = Input.GetKey(KeyCode.E) ? Quaternion.Euler(0, 0, -30) : Quaternion.Euler(0, 0, 0);
         }
 
         private void ActivateSelected()

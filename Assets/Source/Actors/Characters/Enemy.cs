@@ -20,7 +20,7 @@ public class Enemy : Character, ISelectable
     protected override void OnDeath()
     {
         Debug.Log($"Enemy - {name} is dead.");
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
     public void Activate(GameObject owner)

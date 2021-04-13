@@ -9,6 +9,7 @@ namespace DungeonCrawl.Actors.Items
 {
     public class Item : MonoBehaviour, ISelectable, IUsable
     {
+        [UniqueIdentifier] public string Id;
         [SerializeField] private string _name;
 
         public string Name

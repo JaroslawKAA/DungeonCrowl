@@ -1,14 +1,15 @@
 ﻿using System;
 using DungeonCrawl.Core;
 using Source;
+using Source.Core;
 using UnityEngine;
 
 namespace DungeonCrawl.Actors
 {
     public abstract class Actor : MonoBehaviour
     {
+        [UniqueIdentifier] public string Id;
         [SerializeField] private string _name;
-
         public string Name
         {
             get => _name; 

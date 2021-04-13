@@ -22,6 +22,7 @@ namespace Source.Core.SavingManager
 
         private void Start()
         {
+            // TODO Remove this, it's for testing
             GenerateSave();
         }
 

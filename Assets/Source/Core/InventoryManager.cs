@@ -110,14 +110,6 @@ namespace Source.Core
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.I))
-            {
-                if (Activated)
-                    DeactivateInventory();
-                else
-                    ActivateInventory();
-            }
-
             if (Activated)
             {
                 if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))

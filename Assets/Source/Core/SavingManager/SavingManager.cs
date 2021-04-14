@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DungeonCrawl.Actors.Items;
+using Source.Actors.Characters;
 using UnityEngine;
 
 namespace Source.Core.SavingManager
@@ -34,8 +35,11 @@ namespace Source.Core.SavingManager
         private Save GenerateSave()
         {
             Save save = new Save();
-            
-            // TODO Save player state
+            // Save player data
+            var playerGameObject = GameObject.FindGameObjectWithTag("Player");
+            Player player = playerGameObject.GetComponent<Player>();
+            PlayerSaveData playerData = new PlayerSaveData(player);
+            save.Player = playerData;
             
             // TODO Save characters states
             

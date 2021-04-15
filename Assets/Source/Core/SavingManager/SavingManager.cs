@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using DungeonCrawl.Actors.Characters;
 using DungeonCrawl.Actors.Items;
+using Source.Actors.Characters;
 using UnityEngine;
 
 namespace Source.Core.SavingManager
@@ -35,11 +35,14 @@ namespace Source.Core.SavingManager
         private Save GenerateSave()
         {
             Save save = new Save();
+            // Save player data
+            var playerGameObject = GameObject.FindGameObjectWithTag("Player");
+            Player player = playerGameObject.GetComponent<Player>();
+            PlayerSaveData playerData = new PlayerSaveData(player);
+            save.Player = playerData;
             
-            // TODO Save player state
+            // TODO Save characters states
             
-            // Save characters states
-            save.Characters = generateCharactersSaveDatas();
             // Save items states
             save.Items = GenerateItemsSaveData();
 
@@ -61,22 +64,6 @@ namespace Source.Core.SavingManager
             }
 
             return itemsDictionary;
-        }
-
-        private Dictionary<string, CharactersSaveData> generateCharactersSaveDatas()
-        {
-            var charactersObjects = GameObject.FindGameObjectsWithTag("Character");
-            Dictionary<string, CharactersSaveData> chharactersDictionary = new Dictionary<string, CharactersSaveData>();
-
-            foreach (var characterObject in charactersObjects)
-            {
-                Character character = characterObject.GetComponent<Character>();
-                CharactersSaveData charactersSaveData = new CharactersSaveData(characterObject.activeSelf,
-                    character.CurrentHealth, character.Position);
-                chharactersDictionary[character.Id] = charactersSaveData;
-            }
-
-            return chharactersDictionary;
         }
     }
 }

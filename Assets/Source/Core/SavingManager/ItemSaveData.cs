@@ -1,5 +1,3 @@
-﻿
-
 namespace Source.Core.SavingManager
 {
     public class ItemsSaveData
@@ -12,6 +10,5 @@ namespace Source.Core.SavingManager
             Enabled = enabled;
             Amount = amount;
         }
-     
     }
 }

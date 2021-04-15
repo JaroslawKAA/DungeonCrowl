@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Source.Core.SavingManager
 {
+    [System.Serializable]
     public class Save
     {
-        public PlayerSaveData Player { get; set; }
-        public Dictionary<string, CharactersSaveData> Characters { get; set; }
-        public Dictionary<string, ItemsSaveData> Items { get; set; }
+        public PlayerSaveData player;
+        public List<CharactersSaveData> characters;
+        public List<ItemsSaveData> items;
     }
 }

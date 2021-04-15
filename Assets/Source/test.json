@@ -1,0 +1,181 @@
+﻿{
+  "player": {
+    "position": {
+      "x": 15.050000190734864,
+      "y": -15.789999961853028,
+      "z": -1.0
+    },
+    "currentHealth": 80,
+    "maxHealth": 80,
+    "inventory": [],
+    "equipment": {
+      "helmet": "",
+      "armor": "",
+      "weapon": ""
+    }
+  },
+  "characters": [
+    {
+      "id": "e9f948cf-98c6-47ca-9b64-5a45fb309efd",
+      "enabled": true,
+      "position": {
+        "x": -9.25,
+        "y": -4.420000076293945,
+        "z": -1.0
+      },
+      "currentHealth": 50
+    },
+    {
+      "id": "e0aae7f9-40be-430d-ab3a-594774ef940a",
+      "enabled": true,
+      "position": {
+        "x": 1.8600000143051148,
+        "y": -2.6500000953674318,
+        "z": -1.0
+      },
+      "currentHealth": 20
+    },
+    {
+      "id": "",
+      "enabled": true,
+      "position": {
+        "x": -2.0899999141693117,
+        "y": 12.9399995803833,
+        "z": -1.0
+      },
+      "currentHealth": 20
+    },
+    {
+      "id": "eb0f3bb0-874b-4ee5-a72f-184b33f5c033",
+      "enabled": true,
+      "position": {
+        "x": -18.049999237060548,
+        "y": 15.039999961853028,
+        "z": -1.0
+      },
+      "currentHealth": 40
+    },
+    {
+      "id": "",
+      "enabled": true,
+      "position": {
+        "x": 6.559999942779541,
+        "y": 13.130000114440918,
+        "z": -1.0
+      },
+      "currentHealth": 20
+    }
+  ],
+  "items": [
+    {
+      "id": "cb73e7e3-3508-42f4-b42a-7570bba3a85b",
+      "enabled": true,
+      "amount": 1
+    },
+    {
+      "id": "5c1b1d01-029e-4105-9eca-313a18c04b31",
+      "enabled": true,
+      "amount": 1
+    },
+    {
+      "id": "163d831c-cc3b-4a6e-9e5e-07544ec4dfd4",
+      "enabled": true,
+      "amount": 1
+    },
+    {
+      "id": "2c824625-3730-4d20-ae12-9265d414c119",
+      "enabled": true,
+      "amount": 1
+    },
+    {
+      "id": "4da43d92-226f-4eae-a8b9-dbbdac7ac851",
+      "enabled": true,
+      "amount": 1
+    },
+    {
+      "id": "84efd26e-b423-49b9-bd56-4a6b78bdbc2a",
+      "enabled": true,
+      "amount": 1
+    },
+    {
+      "id": "cbf80907-8897-4592-88d9-2a3f33e4848b",
+      "enabled": true,
+      "amount": 1
+    },
+    {
+      "id": "7718577b-29f9-49fe-ae5b-db3e8b559489",
+      "enabled": true,
+      "amount": 1
+    },
+    {
+      "id": "66f703c4-c934-494a-90b5-e1386df1f822",
+      "enabled": true,
+      "amount": 1
+    },
+    {
+      "id": "ed26573d-6c91-4214-8eb8-f9d90293e939",
+      "enabled": true,
+      "amount": 1
+    },
+    {
+      "id": "af0ee091-e96f-4d2d-8818-6600dff7cc63",
+      "enabled": true,
+      "amount": 1
+    },
+    {
+      "id": "94017103-ed1f-44eb-9782-e5ae997f9ad4",
+      "enabled": true,
+      "amount": 1
+    },
+    {
+      "id": "046dcc07-92da-4678-9a40-ccec70e050db",
+      "enabled": true,
+      "amount": 1
+    },
+    {
+      "id": "d2425467-e274-4075-86ae-fbc794f21a31",
+      "enabled": true,
+      "amount": 1
+    },
+    {
+      "id": "dadf43fa-ee9f-4467-aca5-010e45c3cae6",
+      "enabled": true,
+      "amount": 1
+    },
+    {
+      "id": "1370d1a1-13da-4d92-8712-5cb4df6236fa",
+      "enabled": true,
+      "amount": 1
+    },
+    {
+      "id": "35fa25a9-d069-45ca-8e2f-400c2fe4121d",
+      "enabled": true,
+      "amount": 1
+    },
+    {
+      "id": "19304d38-5e45-46db-b8b8-e67da8e9caf5",
+      "enabled": true,
+      "amount": 1
+    },
+    {
+      "id": "76cf0308-6ca9-4c6d-a809-8bee7be07eb3",
+      "enabled": true,
+      "amount": 1
+    },
+    {
+      "id": "4e823db7-922a-4a91-b36e-ed619bc5cb45",
+      "enabled": true,
+      "amount": 1
+    },
+    {
+      "id": "ce646d7f-2770-4a07-b9e4-a6b2e0e7e818",
+      "enabled": true,
+      "amount": 1
+    },
+    {
+      "id": "a4cbc79d-0c51-4b5f-b87f-0af7413fcae2",
+      "enabled": true,
+      "amount": 1
+    }
+  ]
+}

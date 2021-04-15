@@ -1,14 +1,19 @@
-﻿namespace Source.Core.SavingManager
+﻿using DungeonCrawl.Actors.Items;
+
+namespace Source.Core.SavingManager
 {
+    [System.Serializable]
     public class ItemsSaveData
     {
-        public bool Enabled;
-        public int Amount;
+        public string id;
+        public bool enabled;
+        public int amount;
 
-        public ItemsSaveData(bool enabled, int amount)
+        public ItemsSaveData(Item item)
         {
-            Enabled = enabled;
-            Amount = amount;
+            this.id = item.Id;
+            this.enabled = item.gameObject.activeSelf;
+            this.amount = item.Amount;
         }
     }
 }

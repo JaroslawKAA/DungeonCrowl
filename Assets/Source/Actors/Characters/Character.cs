@@ -1,14 +1,12 @@
 ﻿using DungeonCrawl.Actors.Items;
 using DungeonCrawl.Core;
 using Source.Actors.Items;
-using Source.Core;
 using UnityEngine;
 
 namespace DungeonCrawl.Actors.Characters
 {
     public abstract class Character : Actor
     {
-       
         public Inventory Inventory { get; private set; }
         public Equipment Equipment { get; private set; }
 

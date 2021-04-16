@@ -14,7 +14,7 @@ namespace Source.Actors.Characters
         public override int CurrentHealth
         {
             get => _currentHealth;
-            protected set
+            set
             {
                 _currentHealth = value;
                 StatisticsUpdater.Singleton.Display();
@@ -24,7 +24,7 @@ namespace Source.Actors.Characters
         public override int MaxHealth
         {
             get => _maxHealth;
-            protected set
+            set
             {
                 _maxHealth = value;
                 StatisticsUpdater.Singleton.Display();

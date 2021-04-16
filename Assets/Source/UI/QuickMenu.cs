@@ -1,4 +1,5 @@
 ﻿using Source.Actors.Characters;
+using Source.Core.SavingManager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -29,7 +30,9 @@ namespace Source.UI
                     SceneManager.LoadScene("Level1");
                     break;
                 case 2:
-                    // TODO Save game
+                    // Save game
+                    SavingManager.Singleton.SaveGame();
+                    Debug.Log("Game saved.");
                     break;
                 case 3:
                     // TODO Load game

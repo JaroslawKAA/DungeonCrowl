@@ -40,9 +40,9 @@ namespace Source.Core.SavingManager
             Debug.Log(save.player.position);
         }
 
-        public Save GetSave()
+        public void SaveGame()
         {
-            return GenerateSave();
+            WriteSaveToFile(GenerateSave());
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Source.Core.SavingManager
             return playerData;
         }
 
-        public Save LoadFromFileSave()
+        private Save LoadFromFileSave()
         {
             string path = Path.Combine(_savingPath, _fileName);
 
@@ -120,12 +120,11 @@ namespace Source.Core.SavingManager
             return null;
         }
 
-        public void WriteSaveToFile(Save save)
+        private void WriteSaveToFile(Save save)
         {
             var json = JsonUtility.ToJson(GenerateSave());
             string path = Path.Combine(_savingPath, _fileName);
 
-            Debug.Log(path);
             File.WriteAllText(path, json);
         }
 

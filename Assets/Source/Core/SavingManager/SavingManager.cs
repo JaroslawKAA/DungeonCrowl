@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using DungeonCrawl.Actors.Characters;
 using DungeonCrawl.Actors.Items;
 using Source.Actors.Characters;
@@ -11,7 +10,8 @@ namespace Source.Core.SavingManager
 {
     public class SavingManager : MonoBehaviour
     {
-        public static string FileName = "SaveData.txt";
+        private string _fileName = "SaveData.json";
+        private string _savingPath;
         public static SavingManager Singleton { get; private set; }
 
         private void Awake()
@@ -23,13 +23,21 @@ namespace Source.Core.SavingManager
             }
 
             Singleton = this;
+            _savingPath = Application.dataPath + "\\save";
+            if (!Directory.Exists(_savingPath))
+            {
+                Directory.CreateDirectory(_savingPath);
+            }
         }
 
         private void Start()
         {
             // TODO Remove this, it's for testing
             var json = JsonUtility.ToJson(GenerateSave());
-            Debug.Log(json);    
+            Debug.Log(json);
+            WriteSaveToFile(GenerateSave());
+            Save save = LoadFromFileSave();
+            Debug.Log(save.player.position);
         }
 
         public Save GetSave()
@@ -37,15 +45,19 @@ namespace Source.Core.SavingManager
             return GenerateSave();
         }
 
+        /// <summary>
+        /// Read game state and return save object.
+        /// </summary>
+        /// <returns>State of the game.</returns>
         private Save GenerateSave()
         {
             Save save = new Save();
             // Save player data
             save.player = GeneratePlayerSaveData();
-            
+
             // Save characters states
             save.characters = GenerateCharactersSaveData();
-            
+
             // Save items states
             save.items = GenerateItemsSaveData();
 
@@ -56,7 +68,7 @@ namespace Source.Core.SavingManager
         {
             // Get items in scene and fill list by CharacterSaveData objects
             List<CharactersSaveData> charactersList = new List<CharactersSaveData>();
-            
+
             var charactersObjects = GameObject.FindGameObjectsWithTag("Character");
             foreach (var characterObject in charactersObjects)
             {
@@ -71,10 +83,10 @@ namespace Source.Core.SavingManager
         private List<ItemsSaveData> GenerateItemsSaveData()
         {
             // Get items in scene and fill list by ItemSaveData objects
-            
+
             var itemsObjects = GameObject.FindGameObjectsWithTag("Item");
             List<ItemsSaveData> itemsList = new List<ItemsSaveData>();
-            
+
             foreach (var itemObject in itemsObjects)
             {
                 Item item = itemObject.GetComponent<Item>();
@@ -92,36 +104,29 @@ namespace Source.Core.SavingManager
             PlayerSaveData playerData = new PlayerSaveData(player);
             return playerData;
         }
-        
+
         public Save LoadFromFileSave()
         {
-            string path = Application.persistentDataPath + FileName;
-            Save save = new Save();
+            string path = Path.Combine(_savingPath, _fileName);
 
             if (File.Exists(path))
             {
                 string json = File.ReadAllText(path);
-                save = JsonUtility.FromJson<Save>(json);
-            }
-            else
-            {
-                Debug.Log("Could not Open the file " + FileName + "to read");
+                Save save = JsonUtility.FromJson<Save>(json);
+                return save;
             }
 
-            return save;
+            Debug.LogError("Could not Open the file " + _fileName + "to read");
+            return null;
         }
-        
+
         public void WriteSaveToFile(Save save)
         {
-            if (File.Exists(FileName))
-            {
-                Debug.Log(FileName + "already exists");
-                return;
-            }
+            var json = JsonUtility.ToJson(GenerateSave());
+            string path = Path.Combine(_savingPath, _fileName);
 
-            var textFile = File.CreateText(FileName);
-            textFile.WriteLine("Czesc jestem file");
-            textFile.Close();
+            Debug.Log(path);
+            File.WriteAllText(path, json);
         }
 
         public void LoadSave(Save save)
@@ -143,7 +148,6 @@ namespace Source.Core.SavingManager
             }
 
 
-
             //Character
             //Item
         }
@@ -155,7 +159,7 @@ namespace Source.Core.SavingManager
             foreach (var item in itemGameObject)
             {
                 var component = item.GetComponent<Item>();
-                dict.Add(component.Id,component);
+                dict.Add(component.Id, component);
             }
 
             return dict;

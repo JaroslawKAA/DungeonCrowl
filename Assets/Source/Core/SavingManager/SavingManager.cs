@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using DungeonCrawl.Actors.Characters;
 using DungeonCrawl.Actors.Items;
 using Source.Actors.Characters;
 using UnityEngine;
+using Source.Actors.Items;
 
 namespace Source.Core.SavingManager
 {
@@ -87,6 +89,44 @@ namespace Source.Core.SavingManager
             Player player = playerGameObject.GetComponent<Player>();
             PlayerSaveData playerData = new PlayerSaveData(player);
             return playerData;
+        }
+
+
+        public void LoadSave(Save save)
+        {
+            // Player
+            var playerGameObject = GameObject.FindGameObjectWithTag("Player");
+            var player = playerGameObject.GetComponent<Player>();
+            player.Position = save.player.position;
+            player.CurrentHealth = save.player.currentHealth;
+            player.MaxHealth = save.player.maxHealth;
+            //Player Inventory
+            var dictOfItems = GenerateDictOfItemById();
+            var playerInventoryGameObject = GameObject.FindGameObjectWithTag("Inventory");
+            var playerInventory = playerInventoryGameObject.GetComponent<Inventory>();
+
+            foreach (var item in save.player.inventory)
+            {
+                playerInventory.Content.Add(dictOfItems[item]);
+            }
+
+
+
+            //Character
+            //Item
+        }
+
+        public Dictionary<string, Item> GenerateDictOfItemById()
+        {
+            var itemGameObject = GameObject.FindGameObjectsWithTag("Item");
+            Dictionary<string, Item> dict = new Dictionary<string, Item>();
+            foreach (var item in itemGameObject)
+            {
+                var component = item.GetComponent<Item>();
+                dict.Add(component.Id,component);
+            }
+
+            return dict;
         }
     }
 }

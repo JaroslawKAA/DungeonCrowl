@@ -7,8 +7,8 @@ namespace DungeonCrawl.Actors.Characters
 {
     public abstract class Character : Actor
     {
-        public Inventory Inventory { get; private set; }
-        public Equipment Equipment { get; private set; }
+        public Inventory Inventory { get; set; }
+        public Equipment Equipment { get;  set; }
 
         [Header("Attributes")] [SerializeField]
         protected int _currentHealth;
@@ -16,7 +16,7 @@ namespace DungeonCrawl.Actors.Characters
         public virtual int CurrentHealth
         {
             get => _currentHealth;
-            protected set => _currentHealth = value;
+            set => _currentHealth = value;
         }
 
         [SerializeField] protected int _maxHealth = 100;
@@ -24,7 +24,7 @@ namespace DungeonCrawl.Actors.Characters
         public virtual int MaxHealth
         {
             get => _maxHealth;
-            protected set => _maxHealth = value;
+            set => _maxHealth = value;
         }
 
         [SerializeField] protected int _attack = 5;

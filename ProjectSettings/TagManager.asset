@@ -15,6 +15,7 @@ TagManager:
   - ProtectionStatText
   - Character
   - ItemDescription
+  - QuickMenu
   layers:
   - Default
   - TransparentFX

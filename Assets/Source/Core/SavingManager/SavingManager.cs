@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using DungeonCrawl.Actors.Characters;
 using DungeonCrawl.Actors.Items;
 using Source.Actors.Characters;

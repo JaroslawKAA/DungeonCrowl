@@ -1,15 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+using System.Collections.Generic;
+using System.IO;
 using DungeonCrawl.Actors.Characters;
 using DungeonCrawl.Actors.Items;
 using Source.Actors.Characters;
 using UnityEngine;
-using Source.Actors.Items;
 
 namespace Source.Core.SavingManager
 {
     public class SavingManager : MonoBehaviour
     {
+        public static string FileName = "SaveData.txt";
         public static SavingManager Singleton { get; private set; }
 
         private void Awake()
@@ -27,7 +27,7 @@ namespace Source.Core.SavingManager
         {
             // TODO Remove this, it's for testing
             var json = JsonUtility.ToJson(GenerateSave());
-            Debug.Log(json);    
+            Debug.Log(json);
         }
 
         public Save GetSave()
@@ -40,10 +40,10 @@ namespace Source.Core.SavingManager
             Save save = new Save();
             // Save player data
             save.player = GeneratePlayerSaveData();
-            
+
             // Save characters states
             save.characters = GenerateCharactersSaveData();
-            
+
             // Save items states
             save.items = GenerateItemsSaveData();
 
@@ -54,12 +54,12 @@ namespace Source.Core.SavingManager
         {
             // Get items in scene and fill list by CharacterSaveData objects
             List<CharactersSaveData> charactersList = new List<CharactersSaveData>();
-            
+
             var charactersObjects = GameObject.FindGameObjectsWithTag("Character");
             foreach (var characterObject in charactersObjects)
             {
                 Character character = characterObject.GetComponent<Character>();
-                CharactersSaveData characterSaveData = new CharactersSaveData(character);
+                CharactersSaveData characterSaveData = new CharactersSaveData(characterObject);
                 charactersList.Add(characterSaveData);
             }
 
@@ -69,10 +69,10 @@ namespace Source.Core.SavingManager
         private List<ItemsSaveData> GenerateItemsSaveData()
         {
             // Get items in scene and fill list by ItemSaveData objects
-            
+
             var itemsObjects = GameObject.FindGameObjectsWithTag("Item");
             List<ItemsSaveData> itemsList = new List<ItemsSaveData>();
-            
+
             foreach (var itemObject in itemsObjects)
             {
                 Item item = itemObject.GetComponent<Item>();
@@ -91,42 +91,38 @@ namespace Source.Core.SavingManager
             return playerData;
         }
 
-
-        public void LoadSave(Save save)
+        public void WriteSaveToFile(Save save)
         {
-            // Player
-            var playerGameObject = GameObject.FindGameObjectWithTag("Player");
-            var player = playerGameObject.GetComponent<Player>();
-            player.Position = save.player.position;
-            player.CurrentHealth = save.player.currentHealth;
-            player.MaxHealth = save.player.maxHealth;
-            //Player Inventory
-            var dictOfItems = GenerateDictOfItemById();
-            var playerInventoryGameObject = GameObject.FindGameObjectWithTag("Inventory");
-            var playerInventory = playerInventoryGameObject.GetComponent<Inventory>();
-
-            foreach (var id in save.player.inventory)
+            if (File.Exists(FileName))
             {
-                playerInventory.Content.Add(dictOfItems[id]);
+                Debug.Log(FileName + "already exists");
+                return;
             }
 
-
-
-            //Character
-            //Item
+            var textFile = File.CreateText(FileName);
+            textFile.WriteLine("Czesc jestem file");
+            textFile.Close();
         }
 
-        public Dictionary<string, Item> GenerateDictOfItemById()
+
+        public Save LoadFromFileSave()
         {
-            var itemGameObject = GameObject.FindGameObjectsWithTag("Item");
-            Dictionary<string, Item> dict = new Dictionary<string, Item>();
-            foreach (var item in itemGameObject)
+            string path = Application.persistentDataPath + FileName;
+            Save save = new Save();
+
+            if (File.Exists(path))
             {
-                var component = item.GetComponent<Item>();
-                dict.Add(component.Id,component);
+                string json = File.ReadAllText(path);
+                save = JsonUtility.FromJson<Save>(json);
+            }
+            else
+            {
+                Debug.Log("Could not Open the file " + FileName + "to read");
             }
 
-            return dict;
+            return save;
         }
     }
+}
+
 }

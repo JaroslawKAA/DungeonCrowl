@@ -59,7 +59,7 @@ namespace Source.Core.SavingManager
             foreach (var characterObject in charactersObjects)
             {
                 Character character = characterObject.GetComponent<Character>();
-                CharactersSaveData characterSaveData = new CharactersSaveData(characterObject);
+                CharactersSaveData characterSaveData = new CharactersSaveData(character);
                 charactersList.Add(characterSaveData);
             }
 

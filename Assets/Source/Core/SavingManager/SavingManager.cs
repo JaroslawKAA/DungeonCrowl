@@ -105,9 +105,9 @@ namespace Source.Core.SavingManager
             var playerInventoryGameObject = GameObject.FindGameObjectWithTag("Inventory");
             var playerInventory = playerInventoryGameObject.GetComponent<Inventory>();
 
-            foreach (var item in save.player.inventory)
+            foreach (var id in save.player.inventory)
             {
-                playerInventory.Content.Add(dictOfItems[item]);
+                playerInventory.Content.Add(dictOfItems[id]);
             }
 
 

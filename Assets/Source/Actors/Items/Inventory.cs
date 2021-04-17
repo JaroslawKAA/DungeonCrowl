@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DungeonCrawl.Actors.Items;
+using Source.Core;
 
 namespace Source.Actors.Items
 {
@@ -8,46 +10,60 @@ namespace Source.Actors.Items
     {
         private List<Item> _content;
 
-        public int Count => _content.Count;
+        private List<Item> Content
+        {
+            get => _content;
+            set => _content = value;
+        }
+
+        public int Count => Content.Count;
 
         public Inventory()
         {
-            _content = new List<Item>();
+            Content = new List<Item>();
         }
 
         public bool HaveItem(string id)
         {
-            return _content.First(item => item.Id == id) != null;
+            try
+            {
+                Content.First(item => item.Id == id);
+                return true;
+            }
+            catch (InvalidOperationException e)
+            {
+                return false;
+            }
         }
 
         public void RemoveItem(string id)
         {
-            _content.Remove(GetItem(id));
+            Content.Remove(GetItem(id));
         }
-        
+
         public void RemoveItem(Item item)
         {
-            _content.Remove(item);
+            Content.Remove(item);
         }
 
         public Item GetItem(string id)
         {
-            return _content.First(i => i.Id == id);
+            return Content.First(i => i.Id == id);
         }
 
         public Item GetItem(int index)
         {
-            return _content[index];
+            return Content[index];
         }
 
         public void AddItem(Item item)
         {
-            _content.Add(item);
+            Content.Add(item);
         }
 
         public List<Item> GetItems()
         {
-            return _content;
+            return Content;
         }
     }
 }

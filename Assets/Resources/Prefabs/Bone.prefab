@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 8611153272334407760, guid: c59ce84217b0ccf438f9a7cc4a5d62ef, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -112,6 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af18569dfd4e451582b9bfe387affcf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Id: 35fa25a9-d069-45ca-8e2f-400c2fe4121d
   _name: Bone
   _value: 0
   _amount: 1

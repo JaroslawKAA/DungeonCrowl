@@ -72,8 +72,8 @@ namespace Source.Actors.Characters
         private void AttackOpponent()
         {
             if (Equipment.Weapon != null)
-                Hand.localRotation = Input.GetKey(KeyCode.E) 
-                    ? Quaternion.Euler(0, 0, -30) 
+                Hand.localRotation = Input.GetKey(KeyCode.E)
+                    ? Quaternion.Euler(0, 0, -30)
                     : Quaternion.Euler(0, 0, 0);
 
             // If we have equipped weapon and character (With component Character) is selected.
@@ -100,37 +100,33 @@ namespace Source.Actors.Characters
         public override void Move()
         {
             Vector2 movement = new Vector2();
-            float xMovement = 0;
-            float yMovement = 0;
-
 
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             {
                 // Move up
-                yMovement = Speed * Time.deltaTime;
+                movement.y = 1;
             }
 
             if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
             {
                 // Move down
-                yMovement = -Speed * Time.deltaTime;
+                movement.y = -1;
             }
 
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             {
                 // Move left
-                xMovement = -Speed * Time.deltaTime;
+                movement.x = -1;
             }
 
             if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             {
                 // Move right
-                xMovement = Speed * Time.deltaTime;
+                movement.x = 1;
             }
 
-            movement.x = xMovement;
-            movement.y = yMovement;
-            _rb.MovePosition(_rb.position + movement);
+            movement = movement.normalized;
+            _rb.MovePosition(_rb.position + movement * Speed * Time.deltaTime);
         }
 
         protected override void OnDeath()

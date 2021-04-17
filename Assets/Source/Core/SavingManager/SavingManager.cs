@@ -145,9 +145,17 @@ namespace Source.Core.SavingManager
             {
                 playerInventory.AddItem(dictOfItems[id]);
             }
-
-
+            
             //Character
+            var dictOfCharacter = GenerateDictOfCharacterById();
+            foreach (var saveCharacter in save.characters)
+            {
+                var character = dictOfCharacter[saveCharacter.id];
+                character.gameObject.SetActive(saveCharacter.enabled);
+                character.Position = saveCharacter.position;
+                character.CurrentHealth = saveCharacter.currentHealth;
+            }
+
             //Item
         }
 
@@ -159,6 +167,19 @@ namespace Source.Core.SavingManager
             {
                 var component = item.GetComponent<Item>();
                 dict.Add(component.Id, component);
+            }
+
+            return dict;
+        }
+
+        public Dictionary<string, Character> GenerateDictOfCharacterById()
+        {
+            var characterGameObject = GameObject.FindGameObjectsWithTag("Character");
+            Dictionary<string, Character> dict = new Dictionary<string, Character>();
+            foreach (var character in characterGameObject)
+            {
+                var component = character.GetComponent<Character>();
+                dict.Add(component.Id,component);
             }
 
             return dict;

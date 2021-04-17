@@ -57,7 +57,7 @@ namespace DungeonCrawl.Actors.Items
         {
             if (!IncrementAmoutIfExistInInventory(inventoryOwner))
             {
-                inventoryOwner.GetComponent<Character>().Inventory.Content.Add(this);
+                inventoryOwner.GetComponent<Character>().Inventory.AddItem(this);
             }
 
             this.gameObject.SetActive(false);
@@ -74,7 +74,7 @@ namespace DungeonCrawl.Actors.Items
         private bool IncrementAmoutIfExistInInventory(GameObject owner)
         {
             Inventory inventory = owner.GetComponent<Character>().Inventory;
-            foreach (Item item in inventory.Content)
+            foreach (Item item in inventory.GetItems())
             {
                 if (item.Name == this.Name)
                 {

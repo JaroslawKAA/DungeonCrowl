@@ -24,7 +24,7 @@ namespace Source.Actors.Items
         {
             Player player = GameObject.FindWithTag("Player").GetComponent<Player>();
             player.Heal(Healing);
-            player.Inventory.Content.Remove(this);
+            player.Inventory.RemoveItem(this);
         }
 
         public override string ToString()

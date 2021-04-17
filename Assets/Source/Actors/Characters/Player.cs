@@ -142,7 +142,7 @@ namespace Source.Actors.Characters
 
         public bool CheckIfOwnKey(Key key)
         {
-            foreach (Item item in this.Inventory.Content)
+            foreach (Item item in this.Inventory.GetItems())
             {
                 if (item is Key && item == key)
                 {

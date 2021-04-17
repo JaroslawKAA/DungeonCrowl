@@ -124,9 +124,9 @@ namespace Source.Core
                 }
                 else if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Return))
                 {
-                    if (SelectedSlot + _itemsOffset < Inventory.Content.Count)
+                    if (SelectedSlot + _itemsOffset < Inventory.Count)
                     {
-                        Inventory.Content[SelectedSlot + _itemsOffset].Use();
+                        Inventory.GetItem(SelectedSlot + _itemsOffset).Use();
                         Display();
                     }
                 }
@@ -143,7 +143,7 @@ namespace Source.Core
             for (int i = 0; i < InventorySlots.Count; i++)
             {
                 // Instantiate item icon and set correct image and amount value
-                if (i < Inventory.Content.Count - _itemsOffset)
+                if (i < Inventory.Count - _itemsOffset)
                 {
                     Item currentItem = GetItem(i + _itemsOffset);
                     GameObject gameObject = InstantiateIcon(InventorySlots[i], currentItem);
@@ -231,7 +231,7 @@ namespace Source.Core
         /// <returns>Index of item.</returns>
         private Item GetItem(int index)
         {
-            return Inventory.Content[index];
+            return Inventory.GetItem(index);
         }
 
         /// <summary>
@@ -260,8 +260,8 @@ namespace Source.Core
             else
                 LeftRoll.SetActive(false);
 
-            if (Inventory.Content.Count > SlotsCount
-                && _itemsOffset + SlotsCount - 1 < Inventory.Content.Count - 1)
+            if (Inventory.Count > SlotsCount
+                && _itemsOffset + SlotsCount - 1 < Inventory.Count - 1)
                 RightRoll.SetActive(true);
             else
                 RightRoll.SetActive(false);
@@ -294,11 +294,11 @@ namespace Source.Core
 
         private void MoveSelectorLeft()
         {
-            if (Inventory.Content.Count > 0 && SelectedSlot == 0 && _itemsOffset == 0)
+            if (Inventory.Count > 0 && SelectedSlot == 0 && _itemsOffset == 0)
             {
-                if (Inventory.Content.Count < SlotsCount)
+                if (Inventory.Count < SlotsCount)
                 {
-                    SelectedSlot = Inventory.Content.Count - 1;
+                    SelectedSlot = Inventory.Count - 1;
                 }
                 else
                 {
@@ -317,15 +317,15 @@ namespace Source.Core
 
         private void MoveSelectorRight()
         {
-            if (Inventory.Content.Count > 0)
+            if (Inventory.Count > 0)
             {
                 if (SelectedSlot == SlotsCount - 1
-                    && Inventory.Content.Count > SlotsCount
-                    && _itemsOffset + SelectedSlot < Inventory.Content.Count - 1)
+                    && Inventory.Count > SlotsCount
+                    && _itemsOffset + SelectedSlot < Inventory.Count - 1)
                 {
                     _itemsOffset++;
                 }
-                else if (SelectedSlot == SlotsCount - 1 || SelectedSlot == Inventory.Content.Count - 1)
+                else if (SelectedSlot == SlotsCount - 1 || SelectedSlot == Inventory.Count - 1)
                 {
                     SelectedSlot = 0;
                 }

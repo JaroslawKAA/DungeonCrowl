@@ -30,7 +30,7 @@ namespace Source.Core.SavingManager
             currentHealth = player.CurrentHealth;
             maxHealth = player.MaxHealth;
             inventory = new List<string>();
-            foreach (Item item in player.Inventory.Content)
+            foreach (Item item in player.Inventory.GetItems())
             {
                 inventory.Add(item.Id);
             }

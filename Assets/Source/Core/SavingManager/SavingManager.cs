@@ -143,7 +143,7 @@ namespace Source.Core.SavingManager
 
             foreach (var id in save.player.inventory)
             {
-                playerInventory.Content.Add(dictOfItems[id]);
+                playerInventory.AddItem(dictOfItems[id]);
             }
 
 

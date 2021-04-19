@@ -156,7 +156,14 @@ namespace Source.Core.SavingManager
                 character.CurrentHealth = saveCharacter.currentHealth;
             }
 
-            //Item
+            //Items
+            foreach (var itemsSaveData  in save.items)
+            {
+                var item = dictOfItems[itemsSaveData.id];
+                item.Amount = itemsSaveData.amount;
+                item.enabled = itemsSaveData.enabled;
+            }
+            
         }
 
         public Dictionary<string, Item> GenerateDictOfItemById()
@@ -172,7 +179,7 @@ namespace Source.Core.SavingManager
             return dict;
         }
 
-        public Dictionary<string, Character> GenerateDictOfCharacterById()
+        public  Dictionary<string, Character> GenerateDictOfCharacterById()
         {
             var characterGameObject = GameObject.FindGameObjectsWithTag("Character");
             Dictionary<string, Character> dict = new Dictionary<string, Character>();
@@ -184,5 +191,7 @@ namespace Source.Core.SavingManager
 
             return dict;
         }
+
+   
     }
 }

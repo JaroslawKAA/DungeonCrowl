@@ -3,6 +3,7 @@ using Source.Core.SavingManager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 namespace Source.UI
 {
     public class QuickMenu : Menu
@@ -36,6 +37,7 @@ namespace Source.UI
                     break;
                 case 3:
                     // TODO Load game
+                    SavingManager.Singleton.LoadSave(SavingManager.Singleton.LoadFromFileSave());
                     break;
                 case 4:
                     // TODO Settings

@@ -105,7 +105,7 @@ namespace Source.Core.SavingManager
             return playerData;
         }
 
-        private Save LoadFromFileSave()
+        public Save LoadFromFileSave()
         {
             string path = Path.Combine(_savingPath, _fileName);
 
@@ -138,15 +138,16 @@ namespace Source.Core.SavingManager
             player.MaxHealth = save.player.maxHealth;
             //Player Inventory
             var dictOfItems = GenerateDictOfItemById();
-            var playerInventoryGameObject = GameObject.FindGameObjectWithTag("Inventory");
-            var playerInventory = playerInventoryGameObject.GetComponent<Inventory>();
+            //var playerInventoryGameObject = GameObject.FindGameObjectWithTag("Inventory");
+            //var playerInventory = playerInventoryGameObject.GetComponent<Inventory>();
+            var inventoryObject = player.Inventory;
 
             foreach (var id in save.player.inventory)
             {
-                playerInventory.AddItem(dictOfItems[id]);
+                inventoryObject.AddItem(dictOfItems[id]);
             }
             
-            //Character
+            //Characters
             var dictOfCharacter = GenerateDictOfCharacterById();
             foreach (var saveCharacter in save.characters)
             {
@@ -183,10 +184,17 @@ namespace Source.Core.SavingManager
         {
             var characterGameObject = GameObject.FindGameObjectsWithTag("Character");
             Dictionary<string, Character> dict = new Dictionary<string, Character>();
+
+            foreach (var charact in characterGameObject)
+            {
+                var component = charact.GetComponent<Character>();
+                Debug.Log(component.Id);
+            }
+            
             foreach (var character in characterGameObject)
             {
                 var component = character.GetComponent<Character>();
-                dict.Add(component.Id,component);
+                dict.Add(component.Id, component);
             }
 
             return dict;

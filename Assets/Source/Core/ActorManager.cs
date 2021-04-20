@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using DungeonCrawl.Actors;
+using DungeonCrawl.Actors.Characters;
+using DungeonCrawl.Actors.Items;
+using Source.Actors.Characters;
+using Source.Core.SavingManager;
 using UnityEngine;
 using UnityEngine.U2D;
 
@@ -16,9 +20,12 @@ namespace DungeonCrawl.Core
         /// </summary>
         public static ActorManager Singleton { get; private set; }
 
-        private SpriteAtlas _spriteAtlas;
-        private HashSet<Actor> _allActors;
-        private const float ActorZ = -1;
+        private List<Character> _allCharaacters;
+        public List<Character> AllCharacters { get => _allCharaacters; private set => _allCharaacters = value; }
+        private List<Item> _allItems;
+        public List<Item> AllItems { get => _allItems; private set => _allItems = value; }
+        private Player _player;
+        public Player Player { get => _player; private set => _player = value; }
 
         private void Awake()
         {
@@ -30,74 +37,22 @@ namespace DungeonCrawl.Core
 
             Singleton = this;
 
-            _allActors = new HashSet<Actor>();
-            _spriteAtlas = Resources.Load<SpriteAtlas>("Spritesheet");
-        }
-        
-        /// <summary>
-        ///     Unregisters given actor (use when killing/destroying)
-        /// </summary>
-        /// <param name="actor"></param>
-        public void DestroyActor(Actor actor)
-        {
-            _allActors.Remove(actor);
-            Destroy(actor.gameObject);
-        }
+            AllCharacters = new List<Character>();
+            AllItems = new List<Item>();
 
-        /// <summary>
-        ///     Used for cleaning up the scene before loading a new map
-        /// </summary>
-        public void DestroyAllActors()
-        {
-            var actors = _allActors.ToArray();
+            Player = GameObject.FindWithTag("Player").GetComponent<Player>();
+            foreach (Transform child in GameObject.FindWithTag("AllCharacters").transform)
+            {
+                if (child.CompareTag("Character"))
+                {
+                    AllCharacters.Add(child.GetComponent<Character>());
+                }
+            }
 
-            foreach (var actor in actors)
-                DestroyActor(actor);
-        }
-
-        /// <summary>
-        ///     Returns sprite with given ID
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public Sprite GetSprite(int id)
-        {
-            return _spriteAtlas.GetSprite($"kenney_transparent_{id}");
-        }
-
-        /// <summary>
-        ///     Spawns given Actor type at given position
-        /// </summary>
-        /// <typeparam name="T">Actor type</typeparam>
-        /// <param name="position">Position</param>
-        /// <param name="actorName">Actor's name (optional)</param>
-        /// <returns></returns>
-        public T Spawn<T>((int x, int y) position, string actorName = null) where T : Actor
-        {
-            return Spawn<T>(new Vector2(position.x, position.y), actorName);
-        }
-
-        /// <summary>
-        ///     Spawns given Actor type at given position
-        /// </summary>
-        /// <typeparam name="T">Actor type</typeparam>
-        /// <param name="x">X coordinate</param>
-        /// <param name="y">Y coordinate</param>
-        /// <param name="actorName">Actor's name (optional)</param>
-        /// <returns></returns>
-        public T Spawn<T>(Vector2 vector, string actorName = null) where T : Actor
-        {
-            var go = new GameObject();
-            go.AddComponent<SpriteRenderer>();
-
-            var component = go.AddComponent<T>();
-
-            go.name = actorName ?? component.DefaultName;
-            component.Position = new Vector3(vector.x, vector.y, ActorZ);
-
-            _allActors.Add(component);
-
-            return component;
+            foreach (Transform child in GameObject.FindWithTag("AllItems").transform)
+            {
+                AllItems.Add(child.GetComponent<Item>());
+            }
         }
     }
 }

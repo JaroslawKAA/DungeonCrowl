@@ -1,7 +1,8 @@
 ﻿using System;
+using DungeonCrawl;
 using UnityEngine;
 
-namespace DungeonCrawl
+namespace Source
 {
     public static class Utilities
     {

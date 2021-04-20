@@ -1,12 +1,24 @@
-﻿using DungeonCrawl.Core;
+﻿using System;
+using DungeonCrawl.Core;
+using Source;
+using Source.Core;
 using UnityEngine;
 
 namespace DungeonCrawl.Actors
 {
     public abstract class Actor : MonoBehaviour
     {
+        [UniqueIdentifier] public string Id;
+        [SerializeField] private string _name;
+        public string Name
+        {
+            get => _name; 
+            set => _name = value;
+        }
+      
         // Unity inspector params
-        [SerializeField] private float _speed;
+        [SerializeField] private float _speed = 5;
+      
 
         public float Speed
         {
@@ -32,7 +44,13 @@ namespace DungeonCrawl.Actors
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
             Position = new Vector3(Position.x, Position.y, Z);
-            Speed = 5;
+
+            OnAwake();
+        }
+
+        private void Start()
+        {
+            OnStart();
         }
 
         private void Update()
@@ -51,14 +69,9 @@ namespace DungeonCrawl.Actors
         public virtual void Move(Vector2 targetPosition)
         {
             Vector3 currentPosition = transform.position;
-            float distance = Vector3.Distance(currentPosition, targetPosition);
 
-            if (distance > 1)
-            {
-                // Move if distance to target is greater than 1
-                Vector3 newPosition = Vector3.MoveTowards(currentPosition, targetPosition, Speed * Time.deltaTime);
-                Position = newPosition;
-            }
+            Vector3 newPosition = Vector3.MoveTowards(currentPosition, targetPosition, Speed * Time.deltaTime);
+            Position = newPosition;
         }
 
         /// <summary>
@@ -70,9 +83,9 @@ namespace DungeonCrawl.Actors
             Vector2 vector = direction.ToVector();
             float xMovement = vector.x * Speed * Time.deltaTime;
             float yMovement = vector.y * Speed * Time.deltaTime;
-            Vector3 newPosition =  new Vector3( xMovement + Position.x,
-                                                yMovement + Position.y,
-                                                Position.z);
+            Vector3 newPosition = new Vector3(xMovement + Position.x,
+                yMovement + Position.y,
+                Position.z);
             Position = newPosition;
         }
 
@@ -84,7 +97,15 @@ namespace DungeonCrawl.Actors
         protected virtual void OnUpdate(float deltaTime)
         {
         }
-        
+
+        protected virtual void OnAwake()
+        {
+        }
+
+        protected virtual void OnStart()
+        {
+        }
+
         /// <summary>
         ///     Z position of this Actor (0 by default)
         /// </summary>

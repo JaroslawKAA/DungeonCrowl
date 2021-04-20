@@ -9,6 +9,8 @@ namespace DungeonCrawl.Core
     public class CameraController : MonoBehaviour
     {
         public float followingSpeed = 5;
+        public float offsetX = 0;
+        public float offsetY = 0;
         
         /// <summary>
         ///     CameraController singleton
@@ -57,7 +59,7 @@ namespace DungeonCrawl.Core
             Vector3 playerPosition = _player.transform.position;
             Vector3 cameraPosition = transform.position;
 
-            Vector3 targetPosition = new Vector3(playerPosition.x, playerPosition.y, cameraPosition.z);
+            Vector3 targetPosition = new Vector3(playerPosition.x + offsetX, playerPosition.y + offsetY, cameraPosition.z);
             Vector3 newPosition = Vector3.MoveTowards(cameraPosition, targetPosition, followingSpeed * Time.deltaTime);
 
             transform.position = newPosition;

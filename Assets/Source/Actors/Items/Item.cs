@@ -2,6 +2,7 @@
 using DungeonCrawl.Actors.Characters;
 using Source.Actors.Items;
 using Source.Core;
+using Source.UI;
 
 // ReSharper disable All
 
@@ -11,7 +12,6 @@ namespace DungeonCrawl.Actors.Items
     {
         [UniqueIdentifier] public string Id;
         [SerializeField] private string _name;
-
         public string Name
         {
             get => _name;
@@ -40,7 +40,7 @@ namespace DungeonCrawl.Actors.Items
 
         public Item(string name)
         {
-            Name = name;
+            this.Name = name;
             this.Type = ItemType.Other;
         }
 

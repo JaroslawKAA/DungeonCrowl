@@ -96,9 +96,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4b03c5299284fd9b45318496bb6c2e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Id: 274ab252-92a4-4d84-a08d-6eccfac585ab
   _name: Axe
   _value: 2
   _amount: 1
+  Active: 0
   _damages: 2
 --- !u!58 &7249805742494600028
 CircleCollider2D:

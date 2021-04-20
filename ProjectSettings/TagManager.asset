@@ -16,6 +16,8 @@ TagManager:
   - Character
   - ItemDescription
   - QuickMenu
+  - AllItems
+  - AllCharacters
   layers:
   - Default
   - TransparentFX

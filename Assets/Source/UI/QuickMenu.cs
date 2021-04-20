@@ -1,4 +1,6 @@
-﻿using Source.Actors.Characters;
+﻿using DungeonCrawl.Core;
+using Source.Actors.Characters;
+using Source.Core;
 using Source.Core.SavingManager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -33,11 +35,18 @@ namespace Source.UI
                 case 2:
                     // Save game
                     SavingManager.Singleton.SaveGame();
+                    gameObject.transform.parent.gameObject.SetActive(false);
+                    ActorManager.Singleton.Player.enabled = true;
+                    MessageBox.Singleton.DisplayMessage("Game saved.");
                     Debug.Log("Game saved.");
                     break;
                 case 3:
-                    // TODO Load game
+                    // Load game
                     SavingManager.Singleton.LoadSave(SavingManager.Singleton.LoadFromFileSave());
+                    gameObject.transform.parent.gameObject.SetActive(false);
+                    ActorManager.Singleton.Player.enabled = true;
+                    MessageBox.Singleton.DisplayMessage("Game Loaded.");
+                    Debug.Log("Game loaded.");
                     break;
                 case 4:
                     // TODO Settings

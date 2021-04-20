@@ -51,7 +51,7 @@ namespace Source.Core.EnemyStateMachine
         public override void OnEnter()
         {
             base.OnEnter();
-            Debug.Log($"{Enemy.name} - Enter patrol state.");
+            // Debug.Log($"{Enemy.name} - Enter patrol state.");
             Enemy.CurrentState = CharacterState.Patrol;
         }
     }

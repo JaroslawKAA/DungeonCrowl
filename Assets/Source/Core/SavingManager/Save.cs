@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Source.Core.SavingManager
@@ -10,5 +9,6 @@ namespace Source.Core.SavingManager
         public PlayerSaveData player;
         public List<CharactersSaveData> characters;
         public List<ItemsSaveData> items;
+        public Vector3 cameraPosition;
     }
 }

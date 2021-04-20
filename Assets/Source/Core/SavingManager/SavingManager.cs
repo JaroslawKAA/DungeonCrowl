@@ -1,10 +1,14 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using DungeonCrawl.Actors.Characters;
 using DungeonCrawl.Actors.Items;
+using DungeonCrawl.Core;
 using Source.Actors.Characters;
 using UnityEngine;
 using Source.Actors.Items;
+using Source.Core.EnemyStateMachine;
+using Source.UI;
 
 namespace Source.Core.SavingManager
 {
@@ -30,19 +34,9 @@ namespace Source.Core.SavingManager
             }
         }
 
-        private void Start()
-        {
-            // TODO Remove this, it's for testing
-            var json = JsonUtility.ToJson(GenerateSave());
-            Debug.Log(json);
-            WriteSaveToFile(GenerateSave());
-            Save save = LoadFromFileSave();
-            Debug.Log(save.player.position);
-        }
-
         public void SaveGame()
         {
-            WriteSaveToFile(GenerateSave());
+            WriteSaveToFile();
         }
 
         /// <summary>
@@ -61,40 +55,40 @@ namespace Source.Core.SavingManager
             // Save items states
             save.items = GenerateItemsSaveData();
 
+            save.cameraPosition = Camera.main.transform.position;
+
             return save;
         }
 
         private List<CharactersSaveData> GenerateCharactersSaveData()
         {
             // Get items in scene and fill list by CharacterSaveData objects
-            List<CharactersSaveData> charactersList = new List<CharactersSaveData>();
+            List<CharactersSaveData> charactersSaveDataList = new List<CharactersSaveData>();
 
-            var charactersObjects = GameObject.FindGameObjectsWithTag("Character");
-            foreach (var characterObject in charactersObjects)
+            var characters = ActorManager.Singleton.AllCharacters;
+            foreach (var character in characters)
             {
-                Character character = characterObject.GetComponent<Character>();
                 CharactersSaveData characterSaveData = new CharactersSaveData(character);
-                charactersList.Add(characterSaveData);
+                charactersSaveDataList.Add(characterSaveData);
             }
 
-            return charactersList;
+            return charactersSaveDataList;
         }
 
         private List<ItemsSaveData> GenerateItemsSaveData()
         {
             // Get items in scene and fill list by ItemSaveData objects
 
-            var itemsObjects = GameObject.FindGameObjectsWithTag("Item");
-            List<ItemsSaveData> itemsList = new List<ItemsSaveData>();
+            var items = ActorManager.Singleton.AllItems;
+            List<ItemsSaveData> itemsSaveDatas = new List<ItemsSaveData>();
 
-            foreach (var itemObject in itemsObjects)
+            foreach (var item in items)
             {
-                Item item = itemObject.GetComponent<Item>();
                 ItemsSaveData itemsSaveData = new ItemsSaveData(item);
-                itemsList.Add(itemsSaveData);
+                itemsSaveDatas.Add(itemsSaveData);
             }
 
-            return itemsList;
+            return itemsSaveDatas;
         }
 
         private PlayerSaveData GeneratePlayerSaveData()
@@ -120,7 +114,7 @@ namespace Source.Core.SavingManager
             return null;
         }
 
-        private void WriteSaveToFile(Save save)
+        private void WriteSaveToFile()
         {
             var json = JsonUtility.ToJson(GenerateSave());
             string path = Path.Combine(_savingPath, _fileName);
@@ -130,24 +124,44 @@ namespace Source.Core.SavingManager
 
         public void LoadSave(Save save)
         {
-            // Player
-            var playerGameObject = GameObject.FindGameObjectWithTag("Player");
-            var player = playerGameObject.GetComponent<Player>();
-            player.Position = save.player.position;
-            player.CurrentHealth = save.player.currentHealth;
-            player.MaxHealth = save.player.maxHealth;
-            //Player Inventory
             var dictOfItems = GenerateDictOfItemById();
-            //var playerInventoryGameObject = GameObject.FindGameObjectWithTag("Inventory");
-            //var playerInventory = playerInventoryGameObject.GetComponent<Inventory>();
-            var inventoryObject = player.Inventory;
-
-            foreach (var id in save.player.inventory)
-            {
-                inventoryObject.AddItem(dictOfItems[id]);
-            }
+            var player = ActorManager.Singleton.Player;
             
+            // Player
+            LoadPlayerAttributes(save, player);
+
+            //Player Inventory
+            LoadPlayerInventory(save, player, dictOfItems);
+
+            // Player Equipment
+            LoadPlayerEquipment(save, player, dictOfItems);
+
             //Characters
+            LoadCharacters(save);
+
+            //Items
+            LoadItems(save, dictOfItems);
+            
+            // Camera
+            Camera.main.transform.position = save.cameraPosition;
+
+            // Refresh Inventory UI 
+            InventoryManager.Singleton.Display();
+            InventoryManager.Singleton.DisplayEquipment();
+        }
+
+        private static void LoadItems(Save save, Dictionary<string, Item> dictOfItems)
+        {
+            foreach (var itemsSaveData in save.items)
+            {
+                var item = dictOfItems[itemsSaveData.id];
+                item.Amount = itemsSaveData.amount;
+                item.gameObject.SetActive(itemsSaveData.enabled);
+            }
+        }
+
+        private void LoadCharacters(Save save)
+        {
             var dictOfCharacter = GenerateDictOfCharacterById();
             foreach (var saveCharacter in save.characters)
             {
@@ -156,50 +170,58 @@ namespace Source.Core.SavingManager
                 character.Position = saveCharacter.position;
                 character.CurrentHealth = saveCharacter.currentHealth;
             }
+        }
 
-            //Items
-            foreach (var itemsSaveData  in save.items)
+        private static void LoadPlayerAttributes(Save save, Player player)
+        {
+            player.Position = save.player.position;
+            player.CurrentHealth = save.player.currentHealth;
+            player.MaxHealth = save.player.maxHealth;
+        }
+
+        private static void LoadPlayerInventory(Save save, Player player, Dictionary<string, Item> dictOfItems)
+        {
+            var inventoryObject = player.Inventory;
+
+            foreach (var id in save.player.inventory)
             {
-                var item = dictOfItems[itemsSaveData.id];
-                item.Amount = itemsSaveData.amount;
-                item.enabled = itemsSaveData.enabled;
+                inventoryObject.AddItem(dictOfItems[id]);
             }
-            
+        }
+
+        private static void LoadPlayerEquipment(Save save, Player player, Dictionary<string, Item> dictOfItems)
+        {
+            if (!string.IsNullOrEmpty(save.player.equipment.armor))
+                player.Equipment.Armor = dictOfItems[save.player.equipment.armor] as Armor;
+            if (!string.IsNullOrEmpty(save.player.equipment.helmet))
+                player.Equipment.Helmet = dictOfItems[save.player.equipment.helmet] as Helmet;
+            if (!string.IsNullOrEmpty(save.player.equipment.weapon))
+                player.Equipment.Weapon = dictOfItems[save.player.equipment.weapon] as Weapon;
         }
 
         public Dictionary<string, Item> GenerateDictOfItemById()
         {
-            var itemGameObject = GameObject.FindGameObjectsWithTag("Item");
+            var items = ActorManager.Singleton.AllItems;
             Dictionary<string, Item> dict = new Dictionary<string, Item>();
-            foreach (var item in itemGameObject)
+            foreach (var item in items)
             {
-                var component = item.GetComponent<Item>();
-                dict.Add(component.Id, component);
+                dict.Add(item.Id, item);
             }
 
             return dict;
         }
 
-        public  Dictionary<string, Character> GenerateDictOfCharacterById()
+        public Dictionary<string, Character> GenerateDictOfCharacterById()
         {
-            var characterGameObject = GameObject.FindGameObjectsWithTag("Character");
+            var characters = ActorManager.Singleton.AllCharacters;
             Dictionary<string, Character> dict = new Dictionary<string, Character>();
 
-            foreach (var charact in characterGameObject)
+            foreach (var character in characters)
             {
-                var component = charact.GetComponent<Character>();
-                Debug.Log(component.Id);
-            }
-            
-            foreach (var character in characterGameObject)
-            {
-                var component = character.GetComponent<Character>();
-                dict.Add(component.Id, component);
+                dict.Add(character.Id, character);
             }
 
             return dict;
         }
-
-   
     }
 }

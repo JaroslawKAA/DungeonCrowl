@@ -31,7 +31,6 @@ namespace Source.Actors.Items
             else
             {
                 player.Equipment.Weapon = this;
-                Equip(player.gameObject);
             }
         }
 
@@ -48,34 +47,35 @@ namespace Source.Actors.Items
             }
         }
 
-        /// <summary>
-        /// Display weapon.
-        /// </summary>
-        /// <param name="player">Player game object</param>
-        public void Equip(GameObject player)
-        {
-            Transform hand = player.transform.GetChild(0);
-            foreach (Transform child in hand)
-            {
-                Destroy(child.gameObject);
-            }
-
-            GameObject weapon = CreateWeaponInstance(hand);
-
-            weapon.transform.SetParent(hand, false);
-            weapon.transform.localPosition = new Vector3(0.25f, 0.25f, 0f);
-        }
-
-        private GameObject CreateWeaponInstance(Transform parent)
-        {
-            GameObject weaponInstance = new GameObject();
-
-            SpriteRenderer sr = weaponInstance.AddComponent<SpriteRenderer>();
-            sr.sprite = Sprite;
-            sr.sortingOrder = 4;
-
-            return weaponInstance;
-        }
+        // TODO Remove this, moved this to 
+        // /// <summary>
+        // /// Display weapon.
+        // /// </summary>
+        // /// <param name="player">Player game object</param>
+        // public void Equip(GameObject player)
+        // {
+        //     Transform hand = player.transform.GetChild(0);
+        //     foreach (Transform child in hand)
+        //     {
+        //         Destroy(child.gameObject);
+        //     }
+        //
+        //     GameObject weapon = CreateWeaponInstance(hand);
+        //
+        //     weapon.transform.SetParent(hand, false);
+        //     weapon.transform.localPosition = new Vector3(0.25f, 0.25f, 0f);
+        // }
+        //
+        // private GameObject CreateWeaponInstance(Transform parent)
+        // {
+        //     GameObject weaponInstance = new GameObject();
+        //
+        //     SpriteRenderer sr = weaponInstance.AddComponent<SpriteRenderer>();
+        //     sr.sprite = Sprite;
+        //     sr.sortingOrder = 4;
+        //
+        //     return weaponInstance;
+        // }
 
         public override string ToString()
         {

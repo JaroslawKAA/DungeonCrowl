@@ -13,7 +13,7 @@ namespace Source.Core.EnemyStateMachine
         public override void OnEnter()
         {
             base.OnEnter();
-            Debug.Log($"{Enemy.name} - Enter chase state");
+            // Debug.Log($"{Enemy.name} - Enter chase state");
             Enemy.CurrentState = CharacterState.Chase;
         }
 

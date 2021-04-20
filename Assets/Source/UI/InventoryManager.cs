@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
-using DungeonCrawl.Actors.Characters;
 using DungeonCrawl.Actors.Items;
+using DungeonCrawl.Core;
 using Source.Actors.Characters;
 using Source.Actors.Items;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Source.Core
+namespace Source.UI
 {
     public class InventoryManager : MonoBehaviour
     {
@@ -201,7 +201,7 @@ namespace Source.Core
         /// </summary>
         public void DisplayEquipment()
         {
-            Player player = GameObject.FindWithTag("Player").GetComponent<Player>();
+            Player player = ActorManager.Singleton.Player;
 
             ClearSlot(ArmorSlot);
             ClearSlot(HelmetSlot);
@@ -210,6 +210,7 @@ namespace Source.Core
             if (player.Equipment.Weapon != null)
             {
                 InstantiateIcon(WeaponSlot, player.Equipment.Weapon, false);
+                EquipWeapon(ActorManager.Singleton.Player.gameObject, player.Equipment.Weapon);
             }
 
             if (player.Equipment.Helmet != null)
@@ -223,6 +224,35 @@ namespace Source.Core
             }
         }
 
+        /// <summary>
+        /// Display weapon.
+        /// </summary>
+        /// <param name="player">Player game object</param>
+        /// <param name="weapon">Weapon to display</param>
+        public void EquipWeapon(GameObject player, Weapon weapon)
+        {
+            Transform hand = player.transform.GetChild(0);
+            foreach (Transform child in hand)
+            {
+                Destroy(child.gameObject);
+            }
+
+            GameObject weaponGO = CreateWeaponInstance(hand, weapon);
+
+            weaponGO.transform.SetParent(hand, false);
+            weaponGO.transform.localPosition = new Vector3(0.25f, 0.25f, 0f);
+        }
+        
+        private GameObject CreateWeaponInstance(Transform parent, Weapon weapon)
+        {
+            GameObject weaponInstance = new GameObject();
+
+            SpriteRenderer sr = weaponInstance.AddComponent<SpriteRenderer>();
+            sr.sprite = weapon.Sprite;
+            sr.sortingOrder = 4;
+
+            return weaponInstance;
+        }
 
         /// <summary>
         /// Get item from user inventory by index.

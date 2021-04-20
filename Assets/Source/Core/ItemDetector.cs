@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DungeonCrawl.Actors;
 using DungeonCrawl.Actors.Characters;
+using Source.UI;
 using TMPro;
 using UnityEngine;
 
@@ -133,7 +134,6 @@ namespace Source.Core
                     _audioSource.clip = pickUp;
                     _audioSource.Play();
                 }
-                
                 
                 SelectedItem.GetComponent<ISelectable>().Activate(gameObject);
             }

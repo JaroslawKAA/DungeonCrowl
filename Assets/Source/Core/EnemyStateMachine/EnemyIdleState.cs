@@ -28,7 +28,7 @@ namespace Source.Core.EnemyStateMachine
         public override void OnEnter()
         {
             base.OnEnter();
-            Debug.Log($"{Enemy.name} - Enter Idle State");
+            // Debug.Log($"{Enemy.name} - Enter Idle State");
             Enemy.CurrentState = CharacterState.Idle;
             Timer = Delay;
         }

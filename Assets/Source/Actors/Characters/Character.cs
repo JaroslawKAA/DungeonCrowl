@@ -61,8 +61,6 @@ namespace DungeonCrawl.Actors.Characters
                 {
                     // Die
                     OnDeath();
-
-                    ActorManager.Singleton.DestroyActor(this);
                 }
             }
         }

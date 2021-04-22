@@ -21,10 +21,9 @@ namespace Source.Core.EnemyStateMachine
         {
             base.OnEnter();
 
-            Timer = Enemy.attackDelay;
-
             Debug.Log($"{Enemy.name} - Enter Attack state.");
             Enemy.CurrentState = CharacterState.Attack;
+            Timer = 0;
         }
 
         public override void OnUpdate()

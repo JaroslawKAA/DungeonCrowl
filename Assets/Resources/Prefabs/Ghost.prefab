@@ -40,6 +40,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 619201086502124532, guid: 58366b402bea87b4f80904556aada037, type: 3}
+      propertyPath: attackDelay
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 619201086502124532, guid: 58366b402bea87b4f80904556aada037, type: 3}
       propertyPath: AttackSprite
       value: 
       objectReference: {fileID: 21300000, guid: 0cecae28369e89645a9ed64d67bc8be8, type: 3}

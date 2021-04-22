@@ -1,16 +1,19 @@
+using System.Collections.Generic;
 using DungeonCrawl.Actors.Characters;
 using UnityEngine;
 
 namespace Source.Actors
 {
-    [RequireComponent(typeof(NPC))]
     public class GiveItemOnFirstMeet : MonoBehaviour
     {
-        public GameObject itemToGive;
+        public List<GameObject> itemsToGive;
 
         public void GivItem()
         {
-            itemToGive.SetActive(true);
+            foreach (GameObject item in itemsToGive)
+            {
+                item.SetActive(true);
+            }
             Destroy(gameObject.GetComponent<GiveItemOnFirstMeet>());
         }
     }

@@ -97,12 +97,8 @@ namespace Source.UI
             SlotsCount = InventorySlots.Count;
 
             _slotSize = InventorySlots[0].GetComponent<RectTransform>().localScale.x;
-            _player = GameObject.FindWithTag("Player");
+            _player = ActorManager.Singleton.Player.gameObject;
             _itemDescriptionText = GameObject.FindWithTag("ItemDescription").GetComponent<TextMeshProUGUI>();
-        }
-
-        private void Start()
-        {
             Inventory = _player.GetComponent<Player>().Inventory;
 
             Display();
@@ -139,7 +135,7 @@ namespace Source.UI
         public void Display()
         {
             ClearAllInventorySlots();
-
+            
             for (int i = 0; i < InventorySlots.Count; i++)
             {
                 // Instantiate item icon and set correct image and amount value
@@ -168,14 +164,7 @@ namespace Source.UI
         public GameObject InstantiateIcon(GameObject slot, Item item, bool withAmount = true)
         {
             GameObject gameObject;
-            if (withAmount)
-            {
-                gameObject = Instantiate(UIItemWithAmountPrefab, slot.transform);
-            }
-            else
-            {
-                gameObject = Instantiate(UIItemPrefab, slot.transform);
-            }
+            gameObject = Instantiate(withAmount ? UIItemWithAmountPrefab : UIItemPrefab, slot.transform);
 
             gameObject.GetComponent<Image>().sprite = item.Sprite;
             gameObject.GetComponent<RectTransform>().localPosition = new Vector3();

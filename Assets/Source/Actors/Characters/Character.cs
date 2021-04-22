@@ -51,6 +51,11 @@ namespace DungeonCrawl.Actors.Characters
             private set => _idleSprite = value;
         }
 
+        protected Character()
+        {
+            Inventory = new Inventory();
+        }
+
         public void ApplyDamage(int damage)
         {
             if (damage > this.Protection)
@@ -82,7 +87,6 @@ namespace DungeonCrawl.Actors.Characters
         protected override void OnAwake()
         {
             base.OnAwake();
-            Inventory = new Inventory();
             Equipment = new Equipment(this);
             _currentHealth = MaxHealth;
             IdleSprite = GetComponent<SpriteRenderer>().sprite;

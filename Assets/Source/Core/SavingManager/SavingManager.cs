@@ -9,6 +9,7 @@ using UnityEngine;
 using Source.Actors.Items;
 using Source.Core.EnemyStateMachine;
 using Source.UI;
+using UnityEngine.SceneManagement;
 
 namespace Source.Core.SavingManager
 {
@@ -17,6 +18,8 @@ namespace Source.Core.SavingManager
         private string _fileName = "SaveData.json";
         private string _savingPath;
         public static SavingManager Singleton { get; private set; }
+
+        public bool HasSaveDataToLoad => LoadSaveFromFile() != null;
 
         private void Awake()
         {
@@ -37,6 +40,51 @@ namespace Source.Core.SavingManager
         public void SaveGame()
         {
             WriteSaveToFile();
+        }
+
+        public void LoadGame()
+        {
+            SceneManager.sceneLoaded += OnSceneLoaded;
+            SceneManager.LoadScene("Level1");
+        }
+
+        private void LoadSaveData()
+        {
+            Save save = LoadSaveFromFile();
+
+            var dictOfItems = GenerateDictOfItemById();
+            var player = ActorManager.Singleton.Player;
+
+            // Player
+            LoadPlayerAttributes(save, player);
+
+            //Player Inventory
+            LoadPlayerInventory(save, player, dictOfItems);
+
+            // Player Equipment
+            LoadPlayerEquipment(save, player, dictOfItems);
+
+            //Characters
+            LoadCharacters(save);
+
+            //Items
+            LoadItems(save, dictOfItems);
+
+            // Camera
+            Camera.main.transform.position = save.cameraPosition;
+
+            // Refresh Inventory UI 
+            InventoryManager.Singleton.Display();
+            InventoryManager.Singleton.DisplayEquipment();
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            Debug.Log("OnSceneLoaded");
+            LoadSaveData();
+            MessageBox.Singleton.DisplayMessage("Game Loaded.");
+            Debug.Log("Game loaded.");
+            SceneManager.sceneLoaded -= OnSceneLoaded;
         }
 
         /// <summary>
@@ -99,7 +147,7 @@ namespace Source.Core.SavingManager
             return playerData;
         }
 
-        public Save LoadFromFileSave()
+        private Save LoadSaveFromFile()
         {
             string path = Path.Combine(_savingPath, _fileName);
 
@@ -120,34 +168,6 @@ namespace Source.Core.SavingManager
             string path = Path.Combine(_savingPath, _fileName);
 
             File.WriteAllText(path, json);
-        }
-
-        public void LoadSave(Save save)
-        {
-            var dictOfItems = GenerateDictOfItemById();
-            var player = ActorManager.Singleton.Player;
-            
-            // Player
-            LoadPlayerAttributes(save, player);
-
-            //Player Inventory
-            LoadPlayerInventory(save, player, dictOfItems);
-
-            // Player Equipment
-            LoadPlayerEquipment(save, player, dictOfItems);
-
-            //Characters
-            LoadCharacters(save);
-
-            //Items
-            LoadItems(save, dictOfItems);
-            
-            // Camera
-            Camera.main.transform.position = save.cameraPosition;
-
-            // Refresh Inventory UI 
-            InventoryManager.Singleton.Display();
-            InventoryManager.Singleton.DisplayEquipment();
         }
 
         private static void LoadItems(Save save, Dictionary<string, Item> dictOfItems)

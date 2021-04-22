@@ -27,7 +27,7 @@ namespace DungeonCrawl.Actors.Characters
             MessageBox.Singleton.DisplayMessage(message);
             if (playSound)
                 _audioSource.Play();
-            
+            GetComponent<GiveItemOnFirstMeet>()?.GivItem();
         }
 
         protected override void OnAwake()

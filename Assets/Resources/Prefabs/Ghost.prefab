@@ -20,6 +20,10 @@ PrefabInstance:
       value: 6.2645564
       objectReference: {fileID: 0}
     - target: {fileID: 619201086502124532, guid: 58366b402bea87b4f80904556aada037, type: 3}
+      propertyPath: Id
+      value: 65b8bec1-5cf1-460f-af68-f98114a26827
+      objectReference: {fileID: 0}
+    - target: {fileID: 619201086502124532, guid: 58366b402bea87b4f80904556aada037, type: 3}
       propertyPath: _name
       value: Ghost
       objectReference: {fileID: 0}

@@ -158,7 +158,7 @@ namespace Source.Core.SavingManager
                 return save;
             }
 
-            Debug.LogError("Could not Open the file " + _fileName + "to read");
+            Debug.LogError("Could not Open the file " + _fileName + " to read");
             return null;
         }
 
